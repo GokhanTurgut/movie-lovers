@@ -1,0 +1,39 @@
+{
+  "name": "movie-lovers-api",
+  "version": "1.0.0",
+  "description": "Movie lovers REST API for the final project of Gusto&RemoteTeam Bootcamp",
+  "main": "app.js",
+  "scripts": {
+    "start": "node build/app.js",
+    "ts": "ts-node src/app.ts",
+    "dev": "nodemon src/app.ts",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GokhanTurgut/final-project.git"
+  },
+  "author": "Gokhan Turgut",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/GokhanTurgut/final-project/issues"
+  },
+  "homepage": "https://github.com/GokhanTurgut/final-project#readme",
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "express": "^4.17.2",
+    "mysql2": "^2.3.3",
+    "passport": "^0.5.2",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.2.41"
+  },
+  "devDependencies": {
+    "@types/dotenv": "^8.2.0",
+    "@types/express": "^4.17.13",
+    "@types/node": "^17.0.14",
+    "@types/passport": "^1.0.7",
+    "nodemon": "^2.0.15",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.5"
+  }
+}
