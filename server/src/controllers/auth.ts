@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
 import { User } from "../entities/User";
-import { PRIVATE_KEY } from "../utils/env";
+import env from "../utils/env";
 
 export const signUp: RequestHandler = async (req, res) => {
   try {
@@ -52,7 +52,7 @@ export const login: RequestHandler = async (req, res) => {
       res.status(401).json({ message: "Wrong password!" });
       return;
     }
-    const token = jwt.sign({ id: user.id }, PRIVATE_KEY, {
+    const token = jwt.sign({ id: user.id }, env.PRIVATE_KEY, {
       expiresIn: "1h",
     });
     res.json({ message: "Login successful!", token: token, userId: user.id });

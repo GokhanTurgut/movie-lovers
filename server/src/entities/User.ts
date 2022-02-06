@@ -23,7 +23,7 @@ export class User extends BaseEntity {
   @Column()
   lastName: string;
 
-  @Column()
+  @Column({ nullable: true })
   password: string;
 
   @OneToMany(() => Movie, (movie) => movie.user)

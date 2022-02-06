@@ -2,15 +2,16 @@ import express from "express";
 import { createConnection } from "typeorm";
 import passport from "passport";
 
-import { PORT } from "./utils/env";
+import env from "./utils/env";
 import authRoutes from "./routes/auth";
-import usePassportJwt from "./utils/passport";
+import usePassport from "./utils/passport";
+import { User } from "./entities/User";
 
 const app = express();
 
 app.use(express.json());
 app.use(passport.initialize());
-usePassportJwt();
+usePassport();
 
 app.use("/auth", authRoutes);
 
@@ -22,8 +23,13 @@ app.get(
   }
 );
 
+app.get("/", async (req, res) => {
+  const users = await User.find();
+  res.json(users);
+});
+
 createConnection().then(() => {
-  app.listen(PORT, () => {
-    console.log(`Server started on port ${PORT}`);
+  app.listen(env.PORT, () => {
+    console.log(`Server started on port ${env.PORT}`);
   });
 });
