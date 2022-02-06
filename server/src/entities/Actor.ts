@@ -10,7 +10,7 @@ import {
 
 import { User } from "./User";
 import { ActorComment } from "./ActorComment";
-import { Movie } from "./Movie";
+// import { Movie } from "./Movie";
 
 @Entity()
 export class Actor extends BaseEntity {
@@ -23,18 +23,24 @@ export class Actor extends BaseEntity {
   @Column()
   lastName: string;
 
-  @Column({ type: "text" })
+  @Column({ type: "text", nullable: true })
   imageURL: string;
 
   @Column()
   likes: number;
 
+  @Column()
+  public: boolean;
+
+  @Column({ type: "text" })
+  movies: string;
+
   @ManyToOne(() => User, (user) => user.actors)
   user: User;
 
-  @OneToMany(() => ActorComment, (comment) => comment.actor)
+  @OneToMany(() => ActorComment, (actorComment) => actorComment.actor)
   comments: ActorComment[];
 
-  @ManyToMany(() => Movie, (movie) => movie.actors)
-  movies: Movie[];
+  // @ManyToMany(() => Movie, (movie) => movie.actors)
+  // movies: Movie[];
 }

@@ -4,6 +4,7 @@ import passport from "passport";
 
 import env from "./utils/env";
 import authRoutes from "./routes/auth";
+import actorRoutes from "./routes/actor";
 import usePassport from "./utils/passport";
 import { User } from "./entities/User";
 
@@ -14,11 +15,17 @@ app.use(passport.initialize());
 usePassport();
 
 app.use("/auth", authRoutes);
+app.use(
+  "/actor",
+  passport.authenticate("jwt", { session: false }),
+  actorRoutes
+);
 
 app.get(
   "/movies",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
+    console.log(req.user);
     res.json({ message: "Hello World!" });
   }
 );

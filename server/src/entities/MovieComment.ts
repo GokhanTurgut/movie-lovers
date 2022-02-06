@@ -8,6 +8,7 @@ import {
 } from "typeorm";
 
 import { Movie } from "./Movie";
+import { User } from "./User";
 
 @Entity()
 export class MovieComment extends BaseEntity {
@@ -23,9 +24,9 @@ export class MovieComment extends BaseEntity {
   @CreateDateColumn()
   createdAt: Date;
 
-  @Column()
-  password: string;
-
   @ManyToOne(() => Movie, (movie) => movie.comments)
   movie: Movie;
+
+  @ManyToOne(() => User, (user) => user.movieComments)
+  user: User;
 }

@@ -11,7 +11,7 @@ import {
 
 import { User } from "./User";
 import { MovieComment } from "./MovieComment";
-import { Actor } from "./Actor";
+// import { Actor } from "./Actor";
 
 @Entity()
 export class Movie extends BaseEntity {
@@ -39,13 +39,19 @@ export class Movie extends BaseEntity {
   @Column()
   likes: number;
 
+  @Column()
+  public: boolean;
+
+  @Column({ type: "text" })
+  actors: string;
+
   @ManyToOne(() => User, (user) => user.movies)
   user: User;
 
-  @OneToMany(() => MovieComment, (comment) => comment.movie)
+  @OneToMany(() => MovieComment, (movieComment) => movieComment.movie)
   comments: MovieComment[];
 
-  @ManyToMany(() => Actor, (actor) => actor.movies)
-  @JoinTable()
-  actors: Actor[];
+  // @ManyToMany(() => Actor, (actor) => actor.movies)
+  // @JoinTable()
+  // actors: Actor[];
 }

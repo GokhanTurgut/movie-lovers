@@ -8,6 +8,8 @@ import {
 
 import { Movie } from "./Movie";
 import { Actor } from "./Actor";
+import { MovieComment } from "./MovieComment";
+import { ActorComment } from "./ActorComment";
 
 @Entity()
 export class User extends BaseEntity {
@@ -31,4 +33,10 @@ export class User extends BaseEntity {
 
   @OneToMany(() => Actor, (actor) => actor.user)
   actors: Actor[];
+
+  @OneToMany(() => MovieComment, (movieComment) => movieComment.user)
+  movieComments: MovieComment[];
+
+  @OneToMany(() => ActorComment, (actorComment) => actorComment.user)
+  actorComments: ActorComment[];
 }

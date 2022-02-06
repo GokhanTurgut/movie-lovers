@@ -4,10 +4,16 @@ import bcrypt from "bcrypt";
 
 import { User } from "../entities/User";
 import env from "../utils/env";
+import { signUpSchema, loginSchema } from "../utils/validation";
 
 export const signUp: RequestHandler = async (req, res) => {
   try {
-    const { email, firstName, lastName, password } = req.body;
+    const { error, value } = signUpSchema.validate(req.body);
+    if (error) {
+      return res.status(400).json({ message: "Validation error!", error });
+    }
+    const { email, firstName, lastName, password } = value;
+
     const sameEmail = await User.findOne({ email });
     if (sameEmail) {
       return res.status(400).json({ message: "Email already exists!" });
@@ -35,13 +41,13 @@ export const signUp: RequestHandler = async (req, res) => {
 
 export const login: RequestHandler = async (req, res) => {
   try {
-    // const { error, value } = loginSchema.validate(req.body);
-    // if (error) {
-    //   return res
-    //     .status(400)
-    //     .json({ message: "Validation error!", error });
-    // }
-    const { email, password } = req.body;
+    const { error, value } = loginSchema.validate(req.body);
+    if (error) {
+      return res
+        .status(400)
+        .json({ message: "Validation error!", error });
+    }
+    const { email, password } = value;
     const user = await User.findOne({ email });
     if (!user) {
       res.status(401).json({ message: "Email not found!" });
