@@ -1,0 +1,36 @@
+.header {
+  background-color: #d8d8d8;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 1rem 0;
+  gap: 1rem;
+  font-family: 'Ubuntu', sans-serif;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+}
+
+.name {
+  color: black;
+  font-size: 2rem;
+  font-weight: bolder;
+}
+
+.left > img {
+  width: 4rem;
+}
+
+.right {
+  display: flex;
+  align-items: right;
+  gap: 1rem;
+}
+
+@media screen and (max-width: 700px) {
+  .header {
+    flex-direction: column;
+  }
+}
