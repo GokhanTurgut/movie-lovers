@@ -31,8 +31,8 @@ router.get(
 router.get(
   "/facebook",
   passport.authenticate("facebook", {
+    scope: ["email"],
     session: false,
-    scope: ["profile", "email"],
   })
 );
 

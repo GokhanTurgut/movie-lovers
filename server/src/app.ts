@@ -1,6 +1,7 @@
 import express from "express";
 import { createConnection } from "typeorm";
 import passport from "passport";
+import cors from "cors";
 
 import env from "./utils/env";
 import authRoutes from "./routes/auth";
@@ -11,9 +12,10 @@ import { User } from "./entities/User";
 
 const app = express();
 
-app.use(express.json());
-app.use(passport.initialize());
 usePassport();
+app.use(express.json());
+app.use(cors());
+app.use(passport.initialize());
 
 app.use("/auth", authRoutes);
 app.use(

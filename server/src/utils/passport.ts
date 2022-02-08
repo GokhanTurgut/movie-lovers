@@ -1,7 +1,7 @@
 import passport from "passport";
 import passportJwt from "passport-jwt";
 import googlePassport from "passport-google-oauth20";
-import facebookPassport from 'passport-facebook';
+import facebookPassport from "passport-facebook";
 
 import { User } from "../entities/User";
 import env from "./env";
@@ -30,21 +30,27 @@ function usePassport() {
     )
   );
 
-  passport.use(new FacebookStrategy({
-    clientID: env.FACEBOOK_APP_ID,
-    clientSecret: env.FACEBOOK_APP_SECRET,
-    callbackURL: "http://localhost:5000/auth/facebook/callback"
-  },
-  function(accessToken, refreshToken, profile, cb) {
-    console.log("Access Token: " + accessToken);
-    console.log("Refresh Token: " + refreshToken);
-    console.log(JSON.stringify(profile));
-    // User.findOrCreate({ facebookId: profile.id }, function (err, user) {
-    //   return cb(err, user);
-    // });
-    return cb(null, null);
-  }
-));
+  passport.use(
+    new FacebookStrategy(
+      {
+        clientID: env.FACEBOOK_APP_ID,
+        clientSecret: env.FACEBOOK_APP_SECRET,
+        callbackURL: "http://localhost:5000/auth/facebook/callback",
+        profileFields: ["id", "emails", "name"],
+      },
+      facebookHandler
+    )
+  );
+
+  passport.serializeUser((user: User, done) => {
+    done(null, user.id);
+  });
+
+  passport.deserializeUser((id, done) => {
+    User.findOne(id).then((user) => {
+      done(null, user);
+    });
+  });
 }
 
 async function jwtVerify(jwt_payload, done) {
@@ -61,6 +67,24 @@ async function jwtVerify(jwt_payload, done) {
 }
 
 async function googleHandler(accessToken, refreshToken, profile, cb) {
+  try {
+    const email = profile.emails[0].value;
+    const userExists = await User.findOne({ email });
+    if (!userExists) {
+      let user = new User();
+      user.email = email;
+      user.firstName = profile.name.givenName;
+      user.lastName = profile.name.familyName;
+      await user.save();
+      return cb(null, user);
+    }
+    return cb(null, userExists);
+  } catch (err) {
+    return cb(err, null);
+  }
+}
+
+async function facebookHandler(accessToken, refreshToken, profile, cb) {
   try {
     const email = profile.emails[0].value;
     const userExists = await User.findOne({ email });
