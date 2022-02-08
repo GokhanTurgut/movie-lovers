@@ -1,0 +1,17 @@
+.facebook {
+  background-color: #2654b1;
+  border: none;
+  padding: 0.5rem 1rem;
+  color: white;
+  cursor: pointer;
+  font-size: 1rem;
+  border-radius: 5px;
+  width: 14rem;
+  text-align: center;
+  font-family: "Ubuntu", sans-serif;
+}
+
+.facebook:hover,
+.facebook:active {
+  background-color: #4267b2;
+}

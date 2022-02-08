@@ -16,6 +16,11 @@ body {
 
 main {
   flex: 1;
+  background-color: #151515;
+  font-family: 'Ubuntu', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 a {
