@@ -24,7 +24,7 @@ function usePassport() {
       {
         clientID: env.GOOGLE_CLIENT_ID,
         clientSecret: env.GOOGLE_CLIENT_SECRET,
-        callbackURL: "http://localhost:5000/auth/google/callback",
+        callbackURL: `${env.SERVER_URL}/auth/google/callback`,
       },
       googleHandler
     )
@@ -35,7 +35,7 @@ function usePassport() {
       {
         clientID: env.FACEBOOK_APP_ID,
         clientSecret: env.FACEBOOK_APP_SECRET,
-        callbackURL: "http://localhost:5000/auth/facebook/callback",
+        callbackURL: `${env.SERVER_URL}/auth/facebook/callback`,
         profileFields: ["id", "emails", "name"],
       },
       facebookHandler

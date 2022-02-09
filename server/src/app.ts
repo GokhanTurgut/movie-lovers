@@ -5,6 +5,7 @@ import cors from "cors";
 
 import env from "./utils/env";
 import authRoutes from "./routes/auth";
+import publicRoutes from "./routes/public";
 import actorRoutes from "./routes/actor";
 import movieRoutes from "./routes/movie";
 import usePassport from "./utils/passport";
@@ -18,6 +19,7 @@ app.use(cors());
 app.use(passport.initialize());
 
 app.use("/auth", authRoutes);
+app.use("/public", publicRoutes);
 app.use(
   "/actor",
   passport.authenticate("jwt", { session: false }),

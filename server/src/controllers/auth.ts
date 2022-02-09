@@ -71,6 +71,6 @@ export const oauthLogin: RequestHandler = async (req, res) => {
     expiresIn: "1d",
   });
   res.redirect(
-    `http://localhost:3000/signin/success?userId=${userId}&token=${token}`
+    `${env.CLIENT_URL}/signin/success?userId=${userId}&token=${token}`
   );
 };
