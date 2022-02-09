@@ -9,6 +9,7 @@ import { Provider } from "react-redux";
 import Home from "./pages/Home";
 import SignIn from "./pages/Auth/SignIn";
 import SignUp from "./pages/Auth/SignUp";
+import AuthSuccess from "./pages/Auth/AuthSuccess";
 import NotFound from "./pages/NotFound";
 import { RequireAuth, RequireNoAuth } from "./utils/authChecker";
 
@@ -20,7 +21,7 @@ ReactDOM.render(
           <Route path="/" element={<App />}>
             <Route index element={<Home />} />
             <Route
-              path="/signin"
+              path="signin"
               element={
                 <RequireNoAuth>
                   <SignIn />
@@ -28,10 +29,18 @@ ReactDOM.render(
               }
             />
             <Route
-              path="/signup"
+              path="signup"
               element={
                 <RequireNoAuth>
                   <SignUp />
+                </RequireNoAuth>
+              }
+            />
+            <Route
+              path="signin/success"
+              element={
+                <RequireNoAuth>
+                  <AuthSuccess />
                 </RequireNoAuth>
               }
             />

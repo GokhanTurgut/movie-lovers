@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../redux/user";
 import axios from "axios";
-import classes from "./SignIn.module.css";
 import GoogleButton from "../../components/Button/GoogleButton";
 import FacebookButton from "../../components/Button/FacebookButton";
 import { emailChecker } from "../../utils/validation";
@@ -66,9 +65,9 @@ const SignIn = () => {
   }
 
   return (
-    <div className={classes.container}>
-      <h2>Sign in to Movie Lovers</h2>
-      <form className={classes.form} onSubmit={submitHandler}>
+    <div className="container">
+      <h2 className="main-title">Sign in to Movie Lovers</h2>
+      <form className="form-base" onSubmit={submitHandler}>
         <TextField
           id="email"
           label="Email"

@@ -1,18 +1,18 @@
 import { NavLink } from "react-router-dom";
 import movieLogo from "../../assets/movie-logo.svg";
 import Navigation from './Navigation'
-import classes from "./Header.module.css";
+import styles from "./Header.module.css";
 
 const Header = () => {
   return (
-    <header className={classes.header}>
-      <div className={classes.left}>
+    <header className={styles.header}>
+      <div className={styles.left}>
         <img src={movieLogo} alt="Movie Lovers logo" />
-        <NavLink to="/" className={classes.name}>
+        <NavLink to="/" className={styles.name}>
           Movie Lovers
         </NavLink>
       </div>
-      <div className={classes.right}>
+      <div className={styles.right}>
         <Navigation />
       </div>
     </header>

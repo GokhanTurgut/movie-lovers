@@ -1,7 +1,6 @@
 import { TextField, Button } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import classes from "./SignUp.module.css";
 import GoogleButton from "../../components/Button/GoogleButton";
 import FacebookButton from "../../components/Button/FacebookButton";
 import axios from "axios";
@@ -96,9 +95,9 @@ const SignUp = () => {
   }
 
   return (
-    <div className={classes.container}>
-      <h2>Sign up to Movie Lovers</h2>
-      <form className={classes.form} onSubmit={submitHandler}>
+    <div className="container">
+      <h2 className="main-title">Sign up to Movie Lovers</h2>
+      <form className="form-base" onSubmit={submitHandler}>
         <TextField
           id="firstName"
           label="First Name"

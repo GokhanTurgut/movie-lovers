@@ -1,9 +1,8 @@
-import classes from "./Footer.module.css";
+import styles from "./Footer.module.css";
 
 const Footer = () => {
   return (
-    <footer className={classes.footer}>
-      <p>Gusto & RemoteTeam Node.js Bootcamp</p>
+    <footer className={styles.footer}>
       <a
         href="https://github.com/GokhanTurgut"
         target="_blank"
@@ -11,6 +10,7 @@ const Footer = () => {
       >
         <i className="fab fa-github"></i>
       </a>
+      <p>Gusto & RemoteTeam Node.js Bootcamp</p>
     </footer>
   );
 };
