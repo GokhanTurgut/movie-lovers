@@ -2,8 +2,8 @@ import { TextField, Button } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import classes from "./SignUp.module.css";
-import GoogleButton from "../../components/button/GoogleButton";
-import FacebookButton from "../../components/button/FacebookButton";
+import GoogleButton from "../../components/Button/GoogleButton";
+import FacebookButton from "../../components/Button/FacebookButton";
 import axios from "axios";
 import { emailChecker } from "../../utils/validation";
 

@@ -5,8 +5,8 @@ import { useDispatch } from "react-redux";
 import { setUser } from "../../redux/user";
 import axios from "axios";
 import classes from "./SignIn.module.css";
-import GoogleButton from "../../components/button/GoogleButton";
-import FacebookButton from "../../components/button/FacebookButton";
+import GoogleButton from "../../components/Button/GoogleButton";
+import FacebookButton from "../../components/Button/FacebookButton";
 import { emailChecker } from "../../utils/validation";
 
 const SignIn = () => {
@@ -56,7 +56,12 @@ const SignIn = () => {
         navigate("/");
       }
     } catch (err: any) {
-      console.error(err);
+      if (err.response.data.message.includes("Email")) {
+        setEmailError(err.response.data.message);
+      }
+      if (err.response.data.message.includes("password")) {
+        setPasswordError(err.response.data.message);
+      }
     }
   }
 

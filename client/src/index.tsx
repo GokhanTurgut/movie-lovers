@@ -7,9 +7,10 @@ import reportWebVitals from "./reportWebVitals";
 import { store } from "./redux/store";
 import { Provider } from "react-redux";
 import Home from "./pages/Home";
-import SignIn from "./pages/auth/SignIn";
-import SignUp from "./pages/auth/SignUp";
-import NotFound from './pages/NotFound';
+import SignIn from "./pages/Auth/SignIn";
+import SignUp from "./pages/Auth/SignUp";
+import NotFound from "./pages/NotFound";
+import { RequireAuth, RequireNoAuth } from "./utils/authChecker";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -18,8 +19,22 @@ ReactDOM.render(
         <Routes>
           <Route path="/" element={<App />}>
             <Route index element={<Home />} />
-            <Route path="/signin" element={<SignIn />} />
-            <Route path="/signup" element={<SignUp />} />
+            <Route
+              path="/signin"
+              element={
+                <RequireNoAuth>
+                  <SignIn />
+                </RequireNoAuth>
+              }
+            />
+            <Route
+              path="/signup"
+              element={
+                <RequireNoAuth>
+                  <SignUp />
+                </RequireNoAuth>
+              }
+            />
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
