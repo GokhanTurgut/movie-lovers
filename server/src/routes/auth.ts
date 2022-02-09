@@ -1,7 +1,7 @@
 import express from "express";
 import passport from "passport";
 
-import { signUp, login } from "../controllers/auth";
+import { signUp, login, oauthLogin } from "../controllers/auth";
 
 const router = express.Router();
 
@@ -22,10 +22,7 @@ router.get(
   passport.authenticate("google", {
     session: false,
   }),
-  function (req, res) {
-    // Successful authentication, redirect home.
-    res.json({ message: "Google Succesfull!" });
-  }
+  oauthLogin
 );
 
 router.get(
@@ -39,10 +36,7 @@ router.get(
 router.get(
   "/facebook/callback",
   passport.authenticate("facebook", { session: false }),
-  function (req, res) {
-    // Successful authentication, redirect home.
-    res.json({ message: "Facebook Succesfull!" });
-  }
+  oauthLogin
 );
 
 export default router;

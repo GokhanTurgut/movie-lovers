@@ -43,9 +43,7 @@ export const login: RequestHandler = async (req, res) => {
   try {
     const { error, value } = loginSchema.validate(req.body);
     if (error) {
-      return res
-        .status(400)
-        .json({ message: "Validation error!", error });
+      return res.status(400).json({ message: "Validation error!", error });
     }
     const { email, password } = value;
     const user = await User.findOne({ email });
@@ -59,10 +57,20 @@ export const login: RequestHandler = async (req, res) => {
       return;
     }
     const token = jwt.sign({ id: user.id }, env.PRIVATE_KEY, {
-      expiresIn: "1h",
+      expiresIn: "1d",
     });
     res.json({ message: "Login successful!", token: token, userId: user.id });
   } catch (err) {
     res.status(500).json({ message: "Failed, error occurred!", error: err });
   }
+};
+
+export const oauthLogin: RequestHandler = async (req, res) => {
+  const userId = req.user.id;
+  const token = jwt.sign({ id: userId }, env.PRIVATE_KEY, {
+    expiresIn: "1d",
+  });
+  res.redirect(
+    `http://localhost:3000/signin/success?userId=${userId}&token=${token}`
+  );
 };
