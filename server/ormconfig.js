@@ -1,6 +1,9 @@
 module.exports = {
   type: "mysql",
   url: process.env.DATABASE_URL,
+  // For local db
+  database: process.env.DATABASE_NAME,
+  //
   synchronize: true,
   logging: true,
   // Change below to run ts or dev scripts
