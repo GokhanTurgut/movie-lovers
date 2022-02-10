@@ -52,6 +52,8 @@ const SignIn = () => {
             token: token as string,
           })
         );
+        localStorage.setItem("userId", userId);
+        localStorage.setItem("token", token);
         navigate("/");
       }
     } catch (err: any) {
@@ -66,7 +68,7 @@ const SignIn = () => {
 
   return (
     <div className="container">
-      <h2 className="main-title">Sign in to Movie Lovers</h2>
+      <h3 className="margin-zero">Sign in to Movie Lovers</h3>
       <form className="form-base" onSubmit={submitHandler}>
         <TextField
           id="email"
@@ -90,7 +92,7 @@ const SignIn = () => {
           Submit
         </Button>
       </form>
-      <h2>OR</h2>
+      <h3 className="margin-zero">OR</h3>
       <GoogleButton />
       <FacebookButton />
     </div>

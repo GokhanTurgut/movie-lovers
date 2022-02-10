@@ -96,7 +96,7 @@ const SignUp = () => {
 
   return (
     <div className="container">
-      <h2 className="main-title">Sign up to Movie Lovers</h2>
+      <h3 className="margin-zero">Sign up to Movie Lovers</h3>
       <form className="form-base" onSubmit={submitHandler}>
         <TextField
           id="firstName"
@@ -145,7 +145,7 @@ const SignUp = () => {
           Submit
         </Button>
       </form>
-      <h2>OR</h2>
+      <h3 className="margin-zero">OR</h3>
       <GoogleButton />
       <FacebookButton />
     </div>

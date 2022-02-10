@@ -1,9 +1,9 @@
 .header {
-  background-color: #d8d8d8;
+  background-color: #c2c2c2;
   display: flex;
   align-items: center;
   justify-content: space-around;
-  padding: 1rem 0;
+  padding: 1rem;
   gap: 1rem;
   font-family: "Ubuntu", sans-serif;
 }
@@ -25,12 +25,23 @@
 
 .right {
   display: flex;
-  align-items: right;
+  align-items: center;
+  justify-content: center;
   gap: 1rem;
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 900px) {
   .header {
+    flex-direction: column;
+  }
+  .right {
+    gap: .5rem;
+    flex-wrap: wrap;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .right {
     flex-direction: column;
   }
 }

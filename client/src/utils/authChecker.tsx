@@ -6,7 +6,7 @@ export const RequireAuth = ({ children }: { children: JSX.Element }) => {
   const user = useSelector((state: RootState) => state.user);
 
   if (!user.userId || !user.token) {
-    return <Navigate to="/signin" replace />;
+    return <Navigate to="/signin" />;
   }
 
   return children;
@@ -15,8 +15,8 @@ export const RequireAuth = ({ children }: { children: JSX.Element }) => {
 export const RequireNoAuth = ({ children }: { children: JSX.Element }) => {
   const user = useSelector((state: RootState) => state.user);
 
-  if (user.userId || user.token) {
-    return <Navigate to="/" replace />;
+  if (user.userId && user.token) {
+    return <Navigate to="/" />;
   }
 
   return children;

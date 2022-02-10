@@ -9,7 +9,10 @@ import { Provider } from "react-redux";
 import Home from "./pages/Home";
 import SignIn from "./pages/Auth/SignIn";
 import SignUp from "./pages/Auth/SignUp";
-import AuthSuccess from "./pages/Auth/AuthSuccess";
+import AuthSuccess from "./pages/Auth/AuthResult";
+import AddMovie from "./pages/Movie/AddMovie";
+import AddActor from "./pages/Actor/AddActor";
+import Profile from "./pages/Profile/Profile";
 import NotFound from "./pages/NotFound";
 import { RequireAuth, RequireNoAuth } from "./utils/authChecker";
 
@@ -42,6 +45,30 @@ ReactDOM.render(
                 <RequireNoAuth>
                   <AuthSuccess />
                 </RequireNoAuth>
+              }
+            />
+            <Route
+              path="addMovie"
+              element={
+                <RequireAuth>
+                  <AddMovie />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="addActor"
+              element={
+                <RequireAuth>
+                  <AddActor />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="profile"
+              element={
+                <RequireAuth>
+                  <Profile />
+                </RequireAuth>
               }
             />
             <Route path="*" element={<NotFound />} />
