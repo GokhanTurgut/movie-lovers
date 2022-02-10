@@ -1,0 +1,61 @@
+.actor {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+  border-bottom: 1px solid black;
+  padding-bottom: 1rem;
+}
+
+.infoContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.infoContainer > h4 {
+  font-weight: 400;
+  margin: 0;
+}
+
+.imageContainer > img {
+  max-width: 25rem;
+  overflow: hidden;
+  height: 25rem;
+  object-fit: cover;
+}
+
+.btn > i {
+  font-size: 1.1rem;
+}
+
+.btn > h4 {
+  margin: 0;
+  padding-left: 0.5rem;
+  font-weight: bolder;
+  font-size: 0.9rem;
+}
+
+.comments {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.comments > h3 {
+  margin: 0;
+  font-size: 1.3rem;
+}
+
+@media screen and (max-width: 500px) {
+  .imageContainer > img {
+    max-width: 15rem;
+    height: 20rem;
+  }
+}

@@ -23,6 +23,7 @@ main {
   background-color: #151515;
   background-image: url(./assets/poster-background.webp);
   background-size: contain;
+  background-repeat: repeat;
 }
 
 a {

@@ -51,6 +51,14 @@ export const login: RequestHandler = async (req, res) => {
       res.status(401).json({ message: "Email not found!" });
       return;
     }
+    if (!user.password) {
+      res
+        .status(401)
+        .json({
+          message: "No password for this email yet!",
+        });
+      return;
+    }
     const doMatch = await bcrypt.compare(password, user.password);
     if (!doMatch) {
       res.status(401).json({ message: "Wrong password!" });

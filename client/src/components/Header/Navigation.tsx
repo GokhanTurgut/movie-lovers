@@ -1,7 +1,7 @@
 import { Button } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store";
-import { setUser } from "../../redux/user";
+import { clearUser } from "../../redux/user";
 import { useNavigate, NavLink } from "react-router-dom";
 
 function Navigation() {
@@ -10,13 +10,7 @@ function Navigation() {
   const dispatch = useDispatch();
 
   function logoutHandler() {
-    dispatch(
-      setUser({
-        userId: null,
-        token: null,
-      })
-    );
-    localStorage.clear();
+    dispatch(clearUser());
     navigate("/");
   }
 

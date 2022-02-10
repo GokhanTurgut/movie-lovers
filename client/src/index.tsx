@@ -13,6 +13,8 @@ import AuthSuccess from "./pages/Auth/AuthResult";
 import AddMovie from "./pages/Movie/AddMovie";
 import AddActor from "./pages/Actor/AddActor";
 import Profile from "./pages/Profile/Profile";
+import Movie from "./pages/Movie/Movie";
+import Actor from "./pages/Actor/Actor";
 import NotFound from "./pages/NotFound";
 import { RequireAuth, RequireNoAuth } from "./utils/authChecker";
 
@@ -23,6 +25,8 @@ ReactDOM.render(
         <Routes>
           <Route path="/" element={<App />}>
             <Route index element={<Home />} />
+            <Route path="movie/:id" element={<Movie />} />
+            <Route path="actor/:id" element={<Actor />} />
             <Route
               path="signin"
               element={

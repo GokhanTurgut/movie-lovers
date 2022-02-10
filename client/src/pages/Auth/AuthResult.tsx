@@ -1,6 +1,7 @@
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../redux/user";
+import { useEffect } from "react";
 import styles from "./AuthResult.module.css";
 
 const AuthSuccess = () => {
@@ -10,6 +11,22 @@ const AuthSuccess = () => {
   const userId = params.get("userId");
   const token = params.get("token");
 
+  useEffect(() => {
+    if (userId && token) {
+      setTimeout(() => {
+        dispatch(
+          setUser({
+            userId: userId as string,
+            token: token as string,
+          })
+        );
+        localStorage.setItem("userId", userId);
+        localStorage.setItem("token", token);
+        navigate("/");
+      }, 2000);
+    }
+  });
+
   if (!userId || !token) {
     return (
       <div className={styles.error + " container"}>
@@ -18,18 +35,6 @@ const AuthSuccess = () => {
       </div>
     );
   }
-
-  setTimeout(() => {
-    dispatch(
-      setUser({
-        userId: userId as string,
-        token: token as string,
-      })
-    );
-    localStorage.setItem("userId", userId);
-    localStorage.setItem("token", token);
-    navigate("/");
-  }, 3000);
 
   return (
     <div className={styles.success + " container"}>

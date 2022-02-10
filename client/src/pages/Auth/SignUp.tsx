@@ -108,6 +108,7 @@ const SignUp = () => {
           id="firstName"
           label="First Name"
           variant="outlined"
+          value={firstName}
           onChange={firstNameHandler}
           error={!!firstNameError}
           helperText={firstNameError}
@@ -116,6 +117,7 @@ const SignUp = () => {
           id="lastName"
           label="Last Name"
           variant="outlined"
+          value={lastName}
           onChange={lastNameHandler}
           error={!!lastNameError}
           helperText={lastNameError}
@@ -125,6 +127,7 @@ const SignUp = () => {
           label="Email"
           variant="outlined"
           type="email"
+          value={email}
           onChange={emailHandler}
           error={!!emailError}
           helperText={emailError}
@@ -134,6 +137,7 @@ const SignUp = () => {
           label="Password"
           variant="outlined"
           type="password"
+          value={password}
           onChange={passwordHandler}
           error={!!passwordError}
           helperText={passwordError}
@@ -143,6 +147,7 @@ const SignUp = () => {
           label="Confirm Password"
           variant="outlined"
           type="password"
+          value={confirmPassword}
           onChange={confirmPasswordHandler}
           error={!!confirmPasswordError}
           helperText={confirmPasswordError}

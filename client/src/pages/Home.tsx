@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { CircularProgress } from "@mui/material";
-import HomeCard from "../components/UI/HomeCard";
+import HomeCard from "../components/Card/HomeCard";
 import styles from "./Home.module.css";
-import { Movie, Actor } from "../types/global";
+import { MovieData, ActorData } from "../types/global";
 
 const Home = () => {
-  const [movies, setMovies] = useState<Movie[]>([]);
-  const [actors, setActors] = useState<Actor[]>([]);
+  const [movies, setMovies] = useState<MovieData[]>([]);
+  const [actors, setActors] = useState<ActorData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -15,7 +15,6 @@ const Home = () => {
     async function getMovies() {
       try {
         const result = await axios.get("http://localhost:5000/public/movie");
-        console.log(result);
         setMovies(result.data.movies);
         setLoading(false);
       } catch (err) {
@@ -25,7 +24,6 @@ const Home = () => {
     async function getActors() {
       try {
         const result = await axios.get("http://localhost:5000/public/actor");
-        console.log(result);
         setActors(result.data.actors);
         setLoading(false);
       } catch (err) {
@@ -37,7 +35,13 @@ const Home = () => {
   }, []);
   const movieCards = movies.map((movie) => {
     return (
-      <HomeCard key={movie.id} imageURL={movie.posterURL} title={movie.title} />
+      <HomeCard
+        key={movie.id}
+        id={movie.id}
+        imageURL={movie.posterURL}
+        title={movie.title}
+        type="movie"
+      />
     );
   });
 
@@ -45,8 +49,10 @@ const Home = () => {
     return (
       <HomeCard
         key={actor.id}
+        id={actor.id}
         imageURL={actor.imageURL}
         title={actor.firstName + " " + actor.lastName}
+        type="actor"
       />
     );
   });

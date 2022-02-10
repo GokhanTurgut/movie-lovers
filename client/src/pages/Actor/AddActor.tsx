@@ -6,7 +6,7 @@ import { TextField, Button, FormControlLabel, Switch } from "@mui/material";
 import styles from "./AddActor.module.css";
 import { useNavigate } from "react-router-dom";
 
-interface Props {};
+interface Props {}
 
 const defaultObject = {
   firstName: "",
@@ -63,7 +63,6 @@ const AddActor = (props: Props) => {
       return;
     }
     try {
-      console.log(inputs);
       await axios.post("http://localhost:5000/actor", inputs, config);
       navigate("/");
     } catch (err) {
@@ -150,6 +149,7 @@ const AddActor = (props: Props) => {
           label="First Name"
           variant="outlined"
           fullWidth
+          value={inputs.firstName}
           onChange={firstNameHandler}
           error={!!errors.firstName}
           helperText={errors.firstName}
@@ -159,6 +159,7 @@ const AddActor = (props: Props) => {
           label="Last Name"
           variant="outlined"
           fullWidth
+          value={inputs.lastName}
           onChange={lastNameHandler}
           error={!!errors.lastName}
           helperText={errors.lastName}
@@ -168,6 +169,7 @@ const AddActor = (props: Props) => {
           label="Image URL"
           variant="outlined"
           fullWidth
+          value={inputs.imageURL}
           onChange={imageURLHandler}
           error={!!errors.imageURL}
           helperText={errors.imageURL}
@@ -178,13 +180,20 @@ const AddActor = (props: Props) => {
           variant="outlined"
           multiline
           fullWidth
+          value={inputs.movies}
           onChange={moviesHandler}
           error={!!errors.movies}
           helperText={errors.movies}
         />
         <FormControlLabel
           label="Public"
-          control={<Switch defaultChecked onChange={publicHandler} />}
+          control={
+            <Switch
+              defaultChecked
+              onChange={publicHandler}
+              value={inputs.public}
+            />
+          }
         />
         <Button variant="contained" type="submit">
           Submit

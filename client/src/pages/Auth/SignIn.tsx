@@ -82,6 +82,7 @@ const SignIn = () => {
           label="Email"
           variant="outlined"
           type="email"
+          value={email}
           onChange={emailHandler}
           error={!!emailError}
           helperText={emailError}
@@ -91,6 +92,7 @@ const SignIn = () => {
           label="Password"
           variant="outlined"
           type="password"
+          value={password}
           onChange={passwordHandler}
           error={!!passwordError}
           helperText={passwordError}

@@ -86,6 +86,7 @@ const ChangePassword = (props: Props) => {
           variant="outlined"
           type="password"
           size="small"
+          value={password}
           helperText={"Can be empty for first password!"}
           onChange={passwordHandler}
         />
@@ -95,6 +96,7 @@ const ChangePassword = (props: Props) => {
           variant="outlined"
           type="password"
           size="small"
+          value={newPassword}
           onChange={newPasswordHandler}
           error={!!newPasswordError}
           helperText={newPasswordError}
@@ -105,6 +107,7 @@ const ChangePassword = (props: Props) => {
           variant="outlined"
           type="password"
           size="small"
+          value={confirmNewPassword}
           onChange={confirmNewPasswordHandler}
           error={!!confirmNewPasswordError}
           helperText={confirmNewPasswordError}

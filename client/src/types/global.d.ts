@@ -1,4 +1,4 @@
-export interface Movie {
+export interface MovieData {
   id: string;
   title: string;
   posterURL: string;
@@ -9,9 +9,10 @@ export interface Movie {
   director: string;
   likes: number;
   public: boolean;
+  comments?: MovieComment[];
 }
 
-export interface Actor {
+export interface ActorData {
   id: string;
   firstName: string;
   lastName: string;
@@ -19,6 +20,7 @@ export interface Actor {
   likes: number;
   public: boolean;
   movies: string;
+  comments?: ActorComment[];
 }
 
 export interface UserData {
