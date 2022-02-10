@@ -25,7 +25,7 @@ export const postComment: RequestHandler = async (req, res) => {
     comment.actor = actor;
     comment.user = user;
     await comment.save();
-    res.json({
+    res.status(201).json({
       message: "Comment saved!",
       comment: {
         id: comment.id,

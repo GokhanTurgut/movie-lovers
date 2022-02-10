@@ -4,12 +4,12 @@ import passport from "passport";
 import cors from "cors";
 
 import env from "./utils/env";
+import usePassport from "./utils/passport";
 import authRoutes from "./routes/auth";
 import publicRoutes from "./routes/public";
 import actorRoutes from "./routes/actor";
 import movieRoutes from "./routes/movie";
-import usePassport from "./utils/passport";
-import { User } from "./entities/User";
+import userRoutes from "./routes/user";
 
 const app = express();
 
@@ -30,11 +30,7 @@ app.use(
   passport.authenticate("jwt", { session: false }),
   movieRoutes
 );
-
-app.get("/", async (req, res) => {
-  const users = await User.find();
-  res.json(users);
-});
+app.use("/user", passport.authenticate("jwt", { session: false }), userRoutes);
 
 createConnection().then(() => {
   app.listen(env.PORT, () => {

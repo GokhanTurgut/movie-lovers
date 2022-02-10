@@ -16,6 +16,11 @@ export const loginSchema = Joi.object({
   password: Joi.string().min(6).max(255).required(),
 });
 
+export const passwordSchema = Joi.object({
+  oldPassword: Joi.string().min(6).max(255).required(),
+  newPassword: Joi.string().min(6).max(255).required(),
+});
+
 export const createActorSchema = Joi.object({
   firstName: Joi.string().max(255).required(),
 
