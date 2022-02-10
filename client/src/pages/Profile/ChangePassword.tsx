@@ -12,7 +12,7 @@ const ChangePassword = (props: Props) => {
   const [newPasswordError, setNewPasswordError] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const [confirmNewPasswordError, setConfirmNewPasswordError] = useState("");
-  const [message, setMessage] = useState(<p></p>);
+  const [message, setMessage] = useState(<></>);
 
   const user = useSelector((state: RootState) => state.user);
   const config = {
@@ -44,7 +44,14 @@ const ChangePassword = (props: Props) => {
   async function submitHandler(e: React.FormEvent) {
     e.preventDefault();
     if (!!newPasswordError || !!confirmNewPasswordError) return;
-    if (!newPassword || !confirmNewPassword) return;
+    if (!newPassword) {
+      setNewPasswordError("Can't be empty!");
+      return;
+    }
+    if (!confirmNewPassword) {
+      setConfirmNewPasswordError("Can't be empty!");
+      return;
+    }
     try {
       const result = await axios.put(
         "http://localhost:5000/user/password",

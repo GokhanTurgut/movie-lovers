@@ -15,6 +15,7 @@ const Home = () => {
     async function getMovies() {
       try {
         const result = await axios.get("http://localhost:5000/public/movie");
+        console.log(result);
         setMovies(result.data.movies);
         setLoading(false);
       } catch (err) {
@@ -24,6 +25,7 @@ const Home = () => {
     async function getActors() {
       try {
         const result = await axios.get("http://localhost:5000/public/actor");
+        console.log(result);
         setActors(result.data.actors);
         setLoading(false);
       } catch (err) {

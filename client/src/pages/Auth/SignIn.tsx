@@ -38,7 +38,14 @@ const SignIn = () => {
   async function submitHandler(e: React.FormEvent) {
     e.preventDefault();
     if (!!emailError || !!passwordError) return;
-    if (!email || !password) return;
+    if (!email) {
+      setEmailError("Can't be empty!");
+      return;
+    }
+    if (!password) {
+      setPasswordError("Can't be empty!");
+      return;
+    }
     try {
       const result = await axios.post("http://localhost:5000/auth/login", {
         email,

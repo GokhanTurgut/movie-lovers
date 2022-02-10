@@ -5,11 +5,12 @@ import { Button, CircularProgress } from "@mui/material";
 import { RootState } from "../../redux/store";
 import ChangePassword from "./ChangePassword";
 import { UserData } from "../../types/global";
+import styles from "./Profile.module.css";
 
 const Profile = () => {
   const [showPasswordForm, setShowPasswordForm] = useState(false);
   const [userData, setUserData] = useState<UserData | any>();
-  
+
   const user = useSelector((state: RootState) => state.user);
 
   useEffect(() => {
@@ -26,7 +27,7 @@ const Profile = () => {
         console.error(err);
       }
     }
-    getUserData()
+    getUserData();
   }, [user.token]);
 
   function showHandler() {
@@ -39,7 +40,7 @@ const Profile = () => {
   if (showPasswordForm) {
     passwordForm = <ChangePassword />;
   }
-  
+
   if (!userData) {
     return (
       <div className="container">
@@ -49,15 +50,15 @@ const Profile = () => {
   }
 
   return (
-    <div className="page-container">
-      <div className="container profile">
-        <div className="profile-information">
-          <h3>Profile</h3>
+    <div className={styles.pageContainer}>
+      <div className={styles.profile + " container"}>
+        <div className={styles.profileInfo}>
+          <h3>Profile Information</h3>
           <h5>First Name: {userData ? userData.firstName : ""}</h5>
           <h5>Last Name: {userData ? userData.lastName : ""}</h5>
           <h5>Email: {userData ? userData.email : ""}</h5>
         </div>
-        <div className="profile-password">
+        <div className={styles.password}>
           <Button
             variant="contained"
             size="small"

@@ -75,8 +75,14 @@ const SignUp = () => {
       !!confirmPasswordError
     )
       return;
-    if (!firstName || !lastName || !email || !password || !confirmPassword)
+    if (!firstName || !lastName || !email || !password || !confirmPassword) {
+      setFirstNameError("Can't be empty!");
+      setLastNameError("Can't be empty!");
+      setEmailError("Can't be empty!");
+      setPasswordError("Can't be empty!");
+      setConfirmPasswordError("Can't be empty!");
       return;
+    }
     try {
       const result = await axios.post("http://localhost:5000/auth/signup", {
         email,
