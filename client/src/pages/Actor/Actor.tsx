@@ -179,7 +179,13 @@ const Actor = () => {
       </div>
       {feedbackAlert}
       {showAddComment ? (
-        <AddComment id={actor?.id} type="actor" refresh={pageRefresh} />
+        <AddComment
+          id={actor?.id}
+          type="actor"
+          refresh={pageRefresh}
+          editing={false}
+          commentId={undefined}
+        />
       ) : (
         ""
       )}

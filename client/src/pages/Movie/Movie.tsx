@@ -180,7 +180,13 @@ const Movie = () => {
       </div>
       {feedbackAlert}
       {showAddComment ? (
-        <AddComment id={movie?.id} type="movie" refresh={pageRefresh} />
+        <AddComment
+          id={movie?.id}
+          type="movie"
+          refresh={pageRefresh}
+          editing={false}
+          commentId={undefined}
+        />
       ) : (
         ""
       )}

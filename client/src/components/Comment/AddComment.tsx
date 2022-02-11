@@ -1,5 +1,5 @@
+import { useState, useEffect, useMemo } from "react";
 import { TextField, Button } from "@mui/material";
-import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import axios from "axios";
@@ -7,7 +7,9 @@ import styles from "./AddComment.module.css";
 
 interface Props {
   id: string | undefined;
+  commentId: string | undefined;
   type: string;
+  editing: boolean;
   refresh: () => void;
 }
 
@@ -16,9 +18,28 @@ const AddComment = (props: Props) => {
   const [contentError, setContentError] = useState("");
 
   const user = useSelector((state: RootState) => state.user);
-  const config = {
-    headers: { Authorization: `Bearer ${user.token}` },
-  };
+  const config = useMemo(() => {
+    return {
+      headers: { Authorization: `Bearer ${user.token}` },
+    };
+  }, [user.token]);
+
+  useEffect(() => {
+    async function getCommentData() {
+      if (props.editing && props.commentId) {
+        try {
+          const result = await axios.get(
+            `http://localhost:5000/${props.type}/comment/${props.commentId}`,
+            config
+          );
+          setContent(result.data.comment.content);
+        } catch (err) {
+          console.error(err);
+        }
+      }
+    }
+    getCommentData();
+  }, [props.editing, props.commentId, props.type, config]);
 
   async function submitHandler(e: React.FormEvent) {
     e.preventDefault();
@@ -40,16 +61,30 @@ const AddComment = (props: Props) => {
       };
     }
     if (!data) return;
-    try {
-      await axios.post(
-        `http://localhost:5000/${props.type}/comment`,
-        data,
-        config
-      );
-      setContent("");
-      props.refresh();
-    } catch (err) {
-      console.error(err);
+    if (props.editing && props.commentId) {
+      try {
+        const result = await axios.put(
+          `http://localhost:5000/${props.type}/comment/${props.commentId}`,
+          data,
+          config
+        );
+        setContent(result.data.comment.content);
+        props.refresh();
+      } catch (err) {
+        console.error(err);
+      }
+    } else {
+      try {
+        await axios.post(
+          `http://localhost:5000/${props.type}/comment`,
+          data,
+          config
+        );
+        setContent("");
+        props.refresh();
+      } catch (err) {
+        console.error(err);
+      }
     }
   }
 

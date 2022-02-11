@@ -1,8 +1,10 @@
+import { useState } from "react";
 import { ButtonGroup, Button } from "@mui/material";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import AddComment from "../Comment/AddComment";
 import styles from "./ProfileCard.module.css";
 
 interface Props {
@@ -13,6 +15,8 @@ interface Props {
 }
 
 const ProfileCard = (props: Props) => {
+  const [editComment, setEditComment] = useState(<></>);
+  const [editing, setEditing] = useState(false);
   let navigate = useNavigate();
   const user = useSelector((state: RootState) => state.user);
   const config = {
@@ -49,12 +53,62 @@ const ProfileCard = (props: Props) => {
     }
   }
 
-  function editHandler() {
+  async function editHandler() {
     if (props.type === "actor") {
       navigate(`/editActor/${props.id}`);
     }
     if (props.type === "movie") {
       navigate(`/editMovie/${props.id}`);
+    }
+    if (props.type === "movieComment") {
+      if (editing) {
+        setEditComment(<></>);
+        setEditing(false);
+      } else {
+        try {
+          const result = await axios.get(
+            `http://localhost:5000/movie/comment/${props.id}`,
+            config
+          );
+          setEditComment(
+            <AddComment
+              id={result.data.comment.movieId}
+              type="movie"
+              editing={true}
+              commentId={props.id}
+              refresh={props.refreshPage}
+            />
+          );
+          setEditing(true);
+        } catch (err) {
+          console.error(err);
+        }
+      }
+    }
+    if (props.type === "actorComment") {
+      if (editing) {
+        setEditComment(<></>);
+        setEditing(false);
+      } else {
+        try {
+          const result = await axios.get(
+            `http://localhost:5000/actor/comment/${props.id}`,
+            config
+          );
+          setEditComment(
+            <AddComment
+              id={result.data.comment.actorId}
+              type="actor"
+              editing={true}
+              commentId={props.id}
+              refresh={props.refreshPage}
+            />
+          );
+          setEditing(true);
+        } catch (err) {
+          console.error(err);
+        }
+      }
     }
   }
 
@@ -104,6 +158,7 @@ const ProfileCard = (props: Props) => {
           </Button>
         </ButtonGroup>
       </div>
+      <div className={styles.editComment}>{editComment}</div>
     </div>
   );
 };
