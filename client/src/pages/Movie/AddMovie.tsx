@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import axios from "axios";
@@ -7,9 +7,11 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
 import styles from "./AddMovie.module.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-interface Props {}
+interface Props {
+  editing: boolean;
+}
 
 const defaultObject = {
   title: "",
@@ -22,6 +24,7 @@ const defaultObject = {
 };
 
 const AddMovie = (props: Props) => {
+  const { id } = useParams();
   const [inputs, setInputs] = useState(defaultObject);
   const [errors, setErrors] = useState(defaultObject);
   const [release, setRelease] = useState<Date | null>(null);
@@ -31,9 +34,37 @@ const AddMovie = (props: Props) => {
   let navigate = useNavigate();
 
   const user = useSelector((state: RootState) => state.user);
-  const config = {
-    headers: { Authorization: `Bearer ${user.token}` },
-  };
+  const config = useMemo(() => {
+    return {
+      headers: { Authorization: `Bearer ${user.token}` },
+    };
+  }, [user.token]);
+
+  useEffect(() => {
+    async function getActorData() {
+      if (props.editing && id) {
+        try {
+          const result = await axios.get(
+            `http://localhost:5000/movie/${id}`,
+            config
+          );
+          setInputs({
+            title: result.data.movie.title,
+            posterURL: result.data.movie.posterURL,
+            genre: result.data.movie.genre,
+            director: result.data.movie.director,
+            actors: result.data.movie.actors,
+            plot: result.data.movie.plot,
+            public: result.data.movie.public,
+          });
+          setRelease(new Date(result.data.movie.release));
+        } catch (err) {
+          console.error(err);
+        }
+      }
+    }
+    getActorData();
+  }, [props.editing, id, config]);
 
   async function submitHandler(e: React.FormEvent) {
     e.preventDefault();
@@ -85,19 +116,36 @@ const AddMovie = (props: Props) => {
       setReleaseError("Can't be empty!");
       return;
     }
-    try {
-      await axios.post(
-        "http://localhost:5000/movie",
-        { ...inputs, release },
-        config
-      );
-      navigate("/");
-    } catch (err) {
-      setMessage(
-        <p className="error-message">
-          <i className="fas fa-exclamation-circle"></i> Actor creation failed!
-        </p>
-      );
+    if (props.editing && id) {
+      try {
+        const result = await axios.put(
+          `http://localhost:5000/movie/${id}`,
+          { ...inputs, release },
+          config
+        );
+        navigate(`/movie/${result.data.movie.id}`);
+      } catch (err) {
+        setMessage(
+          <p className="error-message">
+            <i className="fas fa-exclamation-circle"></i> Actor creation failed!
+          </p>
+        );
+      }
+    } else {
+      try {
+        const result = await axios.post(
+          "http://localhost:5000/movie",
+          { ...inputs, release },
+          config
+        );
+        navigate(`/movie/${result.data.movie.id}`);
+      } catch (err) {
+        setMessage(
+          <p className="error-message">
+            <i className="fas fa-exclamation-circle"></i> Actor creation failed!
+          </p>
+        );
+      }
     }
   }
 
@@ -283,11 +331,7 @@ const AddMovie = (props: Props) => {
           <FormControlLabel
             label="Public"
             control={
-              <Switch
-                defaultChecked
-                onChange={publicHandler}
-                value={inputs.public}
-              />
+              <Switch onChange={publicHandler} checked={inputs.public} />
             }
           />
           <Button variant="contained" type="submit">

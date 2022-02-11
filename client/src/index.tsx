@@ -55,7 +55,15 @@ ReactDOM.render(
               path="addMovie"
               element={
                 <RequireAuth>
-                  <AddMovie />
+                  <AddMovie editing={false} />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="editMovie/:id"
+              element={
+                <RequireAuth>
+                  <AddMovie editing={true} />
                 </RequireAuth>
               }
             />
@@ -63,7 +71,15 @@ ReactDOM.render(
               path="addActor"
               element={
                 <RequireAuth>
-                  <AddActor />
+                  <AddActor editing={false} />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="editActor/:id"
+              element={
+                <RequireAuth>
+                  <AddActor editing={true} />
                 </RequireAuth>
               }
             />

@@ -11,6 +11,7 @@ import styles from "./Profile.module.css";
 const Profile = () => {
   const [showPasswordForm, setShowPasswordForm] = useState(false);
   const [userData, setUserData] = useState<UserData>();
+  const [refresh, setRefresh] = useState(false);
 
   const user = useSelector((state: RootState) => state.user);
 
@@ -29,10 +30,16 @@ const Profile = () => {
       }
     }
     getUserData();
-  }, [user.token]);
+  }, [user.token, refresh]);
 
   function showHandler() {
     setShowPasswordForm((state) => {
+      return !state;
+    });
+  }
+
+  function refreshHandler() {
+    setRefresh((state) => {
       return !state;
     });
   }
@@ -56,13 +63,24 @@ const Profile = () => {
   let myActorComments;
   if (userData) {
     myMovies = userData.movies.map((movie) => {
-      return <ProfileCard key={movie.id} title={movie.title} />;
+      return (
+        <ProfileCard
+          key={movie.id}
+          title={movie.title}
+          id={movie.id}
+          type="movie"
+          refreshPage={refreshHandler}
+        />
+      );
     });
     myActors = userData.actors.map((actor) => {
       return (
         <ProfileCard
           key={actor.id}
           title={`${actor.firstName} ${actor.lastName}`}
+          id={actor.id}
+          type="actor"
+          refreshPage={refreshHandler}
         />
       );
     });
@@ -71,14 +89,30 @@ const Profile = () => {
         comment.content.length > 14
           ? `${comment.content.slice(0, 15)}...`
           : comment.content.slice(0, 15);
-      return <ProfileCard key={comment.id} title={content} />;
+      return (
+        <ProfileCard
+          key={comment.id}
+          title={content}
+          id={comment.id}
+          type="movieComment"
+          refreshPage={refreshHandler}
+        />
+      );
     });
     myActorComments = userData.actorComments.map((comment) => {
       const content =
         comment.content.length > 14
           ? `${comment.content.slice(0, 15)}...`
           : comment.content.slice(0, 15);
-      return <ProfileCard key={comment.id} title={content} />;
+      return (
+        <ProfileCard
+          key={comment.id}
+          title={content}
+          id={comment.id}
+          type="actorComment"
+          refreshPage={refreshHandler}
+        />
+      );
     });
   }
 

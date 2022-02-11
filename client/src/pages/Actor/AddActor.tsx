@@ -1,12 +1,14 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import axios from "axios";
 import { TextField, Button, FormControlLabel, Switch } from "@mui/material";
 import styles from "./AddActor.module.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-interface Props {}
+interface Props {
+  editing: boolean;
+}
 
 const defaultObject = {
   firstName: "",
@@ -17,16 +19,41 @@ const defaultObject = {
 };
 
 const AddActor = (props: Props) => {
+  const { id } = useParams();
   const [inputs, setInputs] = useState(defaultObject);
   const [errors, setErrors] = useState(defaultObject);
   const [message, setMessage] = useState(<></>);
-
   let navigate = useNavigate();
 
   const user = useSelector((state: RootState) => state.user);
-  const config = {
-    headers: { Authorization: `Bearer ${user.token}` },
-  };
+  const config = useMemo(() => {
+    return {
+      headers: { Authorization: `Bearer ${user.token}` },
+    };
+  }, [user.token]);
+
+  useEffect(() => {
+    async function getActorData() {
+      if (props.editing && id) {
+        try {
+          const result = await axios.get(
+            `http://localhost:5000/actor/${id}`,
+            config
+          );
+          setInputs({
+            firstName: result.data.actor.firstName,
+            lastName: result.data.actor.lastName,
+            imageURL: result.data.actor.imageURL,
+            movies: result.data.actor.movies,
+            public: result.data.actor.public,
+          });
+        } catch (err) {
+          console.error(err);
+        }
+      }
+    }
+    getActorData();
+  }, [props.editing, id, config]);
 
   async function submitHandler(e: React.FormEvent) {
     e.preventDefault();
@@ -62,15 +89,32 @@ const AddActor = (props: Props) => {
       });
       return;
     }
-    try {
-      await axios.post("http://localhost:5000/actor", inputs, config);
-      navigate("/");
-    } catch (err) {
-      setMessage(
-        <p className="error-message">
-          <i className="fas fa-exclamation-circle"></i> Actor creation failed!
-        </p>
-      );
+    if (props.editing && id) {
+      try {
+        const result = await axios.put(
+          `http://localhost:5000/actor/${id}`,
+          inputs,
+          config
+        );
+        navigate(`/actor/${result.data.actor.id}`);
+      } catch (err) {
+        setMessage(
+          <p className="error-message">
+            <i className="fas fa-exclamation-circle"></i> Actor creation failed!
+          </p>
+        );
+      }
+    } else {
+      try {
+        const result = await axios.post("http://localhost:5000/actor", inputs, config);
+        navigate(`/actor/${result.data.actor.id}`);
+      } catch (err) {
+        setMessage(
+          <p className="error-message">
+            <i className="fas fa-exclamation-circle"></i> Actor creation failed!
+          </p>
+        );
+      }
     }
   }
 
@@ -189,9 +233,8 @@ const AddActor = (props: Props) => {
           label="Public"
           control={
             <Switch
-              defaultChecked
               onChange={publicHandler}
-              value={inputs.public}
+              checked={inputs.public}
             />
           }
         />

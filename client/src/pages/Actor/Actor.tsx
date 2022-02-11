@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
@@ -20,9 +20,11 @@ const Actor = () => {
   const [refresh, setRefresh] = useState(false);
 
   const user = useSelector((state: RootState) => state.user);
-  const config = {
-    headers: { Authorization: `Bearer ${user.token}` },
-  };
+  const config = useMemo(() => {
+    return {
+      headers: { Authorization: `Bearer ${user.token}` },
+    };
+  }, [user.token]);
 
   useEffect(() => {
     async function getActor() {
@@ -34,11 +36,21 @@ const Actor = () => {
         setAuthor(result.data.user);
         setLoading(false);
       } catch (err) {
+        const result = await axios.get(
+          `http://localhost:5000/actor/${id}`,
+          config
+        );
+        if (result.status === 200) {
+          setActor(result.data.actor);
+          setAuthor(result.data.user);
+          setLoading(false);
+          return;
+        }
         setError("Error occured with getting data!");
       }
     }
     getActor();
-  }, [id, refresh]);
+  }, [id, config, refresh]);
 
   if (error) {
     return <div className="container">{error}</div>;
