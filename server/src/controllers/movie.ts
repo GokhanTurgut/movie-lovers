@@ -139,7 +139,7 @@ export const updateMovieById: RequestHandler = async (req, res) => {
     if (value.posterURL) {
       movie.posterURL = value.posterURL;
     }
-    if (value.public) {
+    if (value.public !== undefined) {
       movie.public = value.public;
     }
     if (value.actors) {

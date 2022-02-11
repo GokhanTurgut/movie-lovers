@@ -103,6 +103,7 @@ export const updateActorById: RequestHandler = async (req, res) => {
       res.status(400).json({ message: "Validation error!", error });
       return;
     }
+    console.log(value);
     let actor = await Actor.findOne(actorId, { relations: ["user"] });
     if (!actor) {
       res.status(404).json({ message: "No actor with that id found!" });
@@ -121,7 +122,7 @@ export const updateActorById: RequestHandler = async (req, res) => {
     if (value.imageURL) {
       actor.imageURL = value.imageURL;
     }
-    if (value.public) {
+    if (value.public !== undefined) {
       actor.public = value.public;
     }
     if (value.movies) {
