@@ -24,9 +24,13 @@ export class ActorComment extends BaseEntity {
   @CreateDateColumn()
   createdAt: Date;
 
-  @ManyToOne(() => Actor, (actor) => actor.comments)
+  @ManyToOne(() => Actor, (actor) => actor.comments, {
+    onDelete: "CASCADE",
+  })
   actor: Actor;
 
-  @ManyToOne(() => User, (user) => user.actorComments)
+  @ManyToOne(() => User, (user) => user.actorComments, {
+    onDelete: "CASCADE",
+  })
   user: User;
 }

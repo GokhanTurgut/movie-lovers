@@ -45,10 +45,14 @@ export class Movie extends BaseEntity {
   @Column({ type: "text" })
   actors: string;
 
-  @ManyToOne(() => User, (user) => user.movies)
+  @ManyToOne(() => User, (user) => user.movies, {
+    onDelete: "CASCADE",
+  })
   user: User;
 
-  @OneToMany(() => MovieComment, (movieComment) => movieComment.movie)
+  @OneToMany(() => MovieComment, (movieComment) => movieComment.movie, {
+    cascade: true,
+  })
   comments: MovieComment[];
 
   // @ManyToMany(() => Actor, (actor) => actor.movies)

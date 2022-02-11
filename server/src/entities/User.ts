@@ -28,15 +28,23 @@ export class User extends BaseEntity {
   @Column({ nullable: true })
   password: string;
 
-  @OneToMany(() => Movie, (movie) => movie.user)
+  @OneToMany(() => Movie, (movie) => movie.user, {
+    cascade: true,
+  })
   movies: Movie[];
 
-  @OneToMany(() => Actor, (actor) => actor.user)
+  @OneToMany(() => Actor, (actor) => actor.user, {
+    cascade: true,
+  })
   actors: Actor[];
 
-  @OneToMany(() => MovieComment, (movieComment) => movieComment.user)
+  @OneToMany(() => MovieComment, (movieComment) => movieComment.user, {
+    cascade: true,
+  })
   movieComments: MovieComment[];
 
-  @OneToMany(() => ActorComment, (actorComment) => actorComment.user)
+  @OneToMany(() => ActorComment, (actorComment) => actorComment.user, {
+    cascade: true,
+  })
   actorComments: ActorComment[];
 }
