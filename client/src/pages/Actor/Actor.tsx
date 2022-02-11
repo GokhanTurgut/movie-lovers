@@ -129,10 +129,22 @@ const Actor = () => {
           />
         </div>
         <div className={styles.infoContainer}>
-          <h4>Actor: {`${actor?.firstName} ${actor?.lastName}`}</h4>
-          <h4>Movies: {actor?.movies}</h4>
-          <h4>Author: {author}</h4>
-          <h4>Likes: {actor?.likes}</h4>
+          <div className={styles.infoElement}>
+            <h4 className={styles.categoryName}>Actor:</h4>
+            <h4>{`${actor?.firstName} ${actor?.lastName}`}</h4>
+          </div>
+          <div className={styles.infoElement}>
+            <h4 className={styles.categoryName}>Movies:</h4>
+            <h4>{actor?.movies}</h4>
+          </div>
+          <div className={styles.infoElement}>
+            <h4 className={styles.categoryName}>Author:</h4>
+            <h4>{author}</h4>
+          </div>
+          <div className={styles.infoElement}>
+            <h4 className={styles.categoryName}>Likes:</h4>
+            <h4>{actor?.likes}</h4>
+          </div>
           <Button
             variant="contained"
             color="secondary"
@@ -155,7 +167,7 @@ const Actor = () => {
       </div>
       {feedbackAlert}
       {showAddComment ? (
-        <AddComment id={actor?.id} refresh={pageRefresh} />
+        <AddComment id={actor?.id} type="actor" refresh={pageRefresh} />
       ) : (
         ""
       )}

@@ -21,3 +21,8 @@
   margin: 0;
   font-weight: 500;
 }
+
+.btn > i {
+  margin-right: .5rem;
+  font-size: 1rem;
+}

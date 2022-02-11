@@ -12,10 +12,12 @@ interface Props {
 const HomeCard = (props: Props) => {
   return (
     <div className={styles.homeCard}>
-      <img src={props.imageURL} alt="Poster/Actor" />
+      <img src={props.imageURL} alt={`${props.title}`} />
       <h4>{props.title}</h4>
       <NavLink to={`/${props.type}/${props.id}`}>
-        <Button variant="contained">View</Button>
+        <Button variant="contained" className={styles.btn}>
+          <i className="fas fa-eye"></i> View
+        </Button>
       </NavLink>
     </div>
   );

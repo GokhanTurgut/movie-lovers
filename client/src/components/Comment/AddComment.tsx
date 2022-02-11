@@ -7,6 +7,7 @@ import styles from "./AddComment.module.css";
 
 interface Props {
   id: string | undefined;
+  type: string;
   refresh: () => void;
 }
 
@@ -26,17 +27,26 @@ const AddComment = (props: Props) => {
       setContentError("Can't be empty!");
       return;
     }
-
+    let data;
+    if (props.type === "movie") {
+      data = {
+        movieId: props.id,
+        content,
+      };
+    } else if (props.type === "actor") {
+      data = {
+        actorId: props.id,
+        content,
+      };
+    }
+    if (!data) return;
     try {
       await axios.post(
-        `http://localhost:5000/actor/comment`,
-        {
-          actorId: props.id,
-          content,
-        },
+        `http://localhost:5000/${props.type}/comment`,
+        data,
         config
       );
-      setContent('');
+      setContent("");
       props.refresh();
     } catch (err) {
       console.error(err);

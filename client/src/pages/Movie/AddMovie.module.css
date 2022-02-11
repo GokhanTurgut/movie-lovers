@@ -1,0 +1,12 @@
+.addActor {
+  width: 25rem;
+  max-width: 90%;
+}
+
+.addActor > form {
+  width: 100%;
+}
+
+.releaseDate {
+  width: 30rem;
+}
