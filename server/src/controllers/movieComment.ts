@@ -5,6 +5,37 @@ import { User } from "../entities/User";
 import { Movie } from "../entities/Movie";
 import { MovieComment } from "../entities/MovieComment";
 
+export const getCommentById: RequestHandler = async (req, res) => {
+  try {
+    const commentId = req.params.id;
+    const userId = req.user.id;
+    const comment = await MovieComment.findOne(commentId, {
+      relations: ["movie", "user"],
+    });
+    if (!comment) {
+      res.status(404).json({ message: "No comment with that id found!" });
+      return;
+    }
+    if (userId != comment.user.id) {
+      res.status(401).json({ message: "Users does not match!" });
+      return;
+    }
+    res.json({
+      message: "Comment found!",
+      user: `${comment.user.firstName} ${comment.user.lastName}`,
+      comment: {
+        id: comment.id,
+        author: comment.author,
+        content: comment.content,
+        createdAt: comment.createdAt,
+        movieId: comment.movie.id,
+      },
+    });
+  } catch (err) {
+    res.status(500).json({ message: "Failed, error occurred!", error: err });
+  }
+};
+
 export const postComment: RequestHandler = async (req, res) => {
   try {
     const userId = req.user.id;

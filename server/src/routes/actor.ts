@@ -17,6 +17,8 @@ router.put("/:id", actorController.updateActorById);
 
 router.post("/like/:id", actorController.likeActorById);
 
+router.get("/comment/:id", actorCommentController.getCommentById);
+
 router.post("/comment", actorCommentController.postComment);
 
 router.delete("/comment/:id", actorCommentController.deleteCommentById);
