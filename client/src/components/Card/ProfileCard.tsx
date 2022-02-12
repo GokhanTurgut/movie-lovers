@@ -158,7 +158,7 @@ const ProfileCard = (props: Props) => {
           </Button>
         </ButtonGroup>
       </div>
-      <div className={styles.editComment}>{editComment}</div>
+      {editing && <div className={styles.editComment}>{editComment}</div>}
     </div>
   );
 };

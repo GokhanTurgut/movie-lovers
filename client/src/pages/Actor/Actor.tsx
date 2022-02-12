@@ -21,9 +21,13 @@ const Actor = () => {
 
   const user = useSelector((state: RootState) => state.user);
   const config = useMemo(() => {
-    return {
-      headers: { Authorization: `Bearer ${user.token}` },
-    };
+    if (user.token) {
+      return {
+        headers: { Authorization: `Bearer ${user.token}` },
+      };
+    } else {
+      return null;
+    }
   }, [user.token]);
 
   useEffect(() => {
@@ -36,15 +40,17 @@ const Actor = () => {
         setAuthor(result.data.user);
         setLoading(false);
       } catch (err) {
-        const result = await axios.get(
-          `http://localhost:5000/actor/${id}`,
-          config
-        );
-        if (result.status === 200) {
-          setActor(result.data.actor);
-          setAuthor(result.data.user);
-          setLoading(false);
-          return;
+        if (config) {
+          const result = await axios.get(
+            `http://localhost:5000/actor/${id}`,
+            config
+          );
+          if (result.status === 200) {
+            setActor(result.data.actor);
+            setAuthor(result.data.user);
+            setLoading(false);
+            return;
+          }
         }
         setError("Error occured with getting data!");
       }
@@ -88,16 +94,18 @@ const Actor = () => {
       return;
     }
     try {
-      const result = await axios.post(
-        `http://localhost:5000/actor/like/${actor?.id}`,
-        {},
-        config
-      );
-      setActor((state) => {
-        if (state) {
-          return { ...state, likes: result.data.actor.likes };
-        }
-      });
+      if (config) {
+        const result = await axios.post(
+          `http://localhost:5000/actor/like/${actor?.id}`,
+          {},
+          config
+        );
+        setActor((state) => {
+          if (state) {
+            return { ...state, likes: result.data.actor.likes };
+          }
+        });
+      }
     } catch (err) {
       setFeedbackAlert(
         <Alert variant="filled" severity="error" onClose={closeFeedbackHandler}>

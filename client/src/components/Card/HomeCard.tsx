@@ -15,7 +15,7 @@ const HomeCard = (props: Props) => {
       <img src={props.imageURL} alt={`${props.title}`} />
       <h4>{props.title}</h4>
       <NavLink to={`/${props.type}/${props.id}`}>
-        <Button variant="contained" className={styles.btn}>
+        <Button variant="contained" color="info" className={styles.btn}>
           <i className="fas fa-eye"></i> View
         </Button>
       </NavLink>

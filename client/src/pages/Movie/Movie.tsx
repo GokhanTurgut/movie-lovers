@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
@@ -20,9 +20,15 @@ const Movie = () => {
   const [refresh, setRefresh] = useState(false);
 
   const user = useSelector((state: RootState) => state.user);
-  const config = {
-    headers: { Authorization: `Bearer ${user.token}` },
-  };
+  const config = useMemo(() => {
+    if (user.token) {
+      return {
+        headers: { Authorization: `Bearer ${user.token}` },
+      };
+    } else {
+      return null;
+    }
+  }, [user.token]);
 
   useEffect(() => {
     async function getMovie() {
@@ -34,11 +40,23 @@ const Movie = () => {
         setAuthor(result.data.user);
         setLoading(false);
       } catch (err) {
+        if (config) {
+          const result = await axios.get(
+            `http://localhost:5000/movie/${id}`,
+            config
+          );
+          if (result.status === 200) {
+            setMovie(result.data.movie);
+            setAuthor(result.data.user);
+            setLoading(false);
+            return;
+          }
+        }
         setError("Error occured with getting data!");
       }
     }
     getMovie();
-  }, [id, refresh]);
+  }, [id, refresh, config]);
 
   if (error) {
     return <div className="container">{error}</div>;
@@ -76,16 +94,18 @@ const Movie = () => {
       return;
     }
     try {
-      const result = await axios.post(
-        `http://localhost:5000/movie/like/${movie?.id}`,
-        {},
-        config
-      );
-      setMovie((state) => {
-        if (state) {
-          return { ...state, likes: result.data.movie.likes };
-        }
-      });
+      if (config) {
+        const result = await axios.post(
+          `http://localhost:5000/movie/like/${movie?.id}`,
+          {},
+          config
+        );
+        setMovie((state) => {
+          if (state) {
+            return { ...state, likes: result.data.movie.likes };
+          }
+        });
+      }
     } catch (err) {
       setFeedbackAlert(
         <Alert variant="filled" severity="error" onClose={closeFeedbackHandler}>
