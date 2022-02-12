@@ -5,7 +5,7 @@ module.exports = {
   database: process.env.DATABASE_NAME,
   //
   synchronize: true,
-  logging: false,
+  logging: ["error", "warn", "info"],
   // Change below to run ts or dev scripts
   entities: ["src/entities/**/*.ts"],
   migrations: ["src/migration/**/*.ts"],

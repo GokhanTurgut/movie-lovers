@@ -8,7 +8,14 @@ export const getUser: RequestHandler = async (req, res) => {
   try {
     const userId = req.user.id;
     const user = await User.findOne(userId, {
-      relations: ["movies", "actors", "movieComments", "actorComments"],
+      relations: [
+        "movies",
+        "actors",
+        "movieComments",
+        "actorComments",
+        "likedMovies",
+        "likedActors",
+      ],
     });
     res.json({
       message: "User found!",
@@ -21,6 +28,8 @@ export const getUser: RequestHandler = async (req, res) => {
         actors: user.actors,
         movieComments: user.movieComments,
         actorComments: user.actorComments,
+        likedMovies: user.likedMovies,
+        likedActors: user.likedActors,
       },
     });
   } catch (err) {

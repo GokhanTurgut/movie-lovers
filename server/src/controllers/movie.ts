@@ -23,7 +23,7 @@ export const getMovieById: RequestHandler = async (req, res) => {
     const movieId = req.params.id;
     const userId = req.user.id;
     const movie = await Movie.findOne(movieId, {
-      relations: ["user", "comments"],
+      relations: ["user", "comments", "likes"],
     });
     if (!movie) {
       res.status(404).json({ message: "No movie with that id found!" });
@@ -77,7 +77,6 @@ export const postMovie: RequestHandler = async (req, res) => {
     movie.genre = value.genre;
     movie.director = value.director;
     movie.posterURL = value.posterURL;
-    movie.likes = 0;
     movie.public = value.public;
     movie.actors = value.actors;
     movie.user = user;
@@ -192,12 +191,28 @@ export const deleteMovieById: RequestHandler = async (req, res) => {
 export const likeMovieById: RequestHandler = async (req, res) => {
   try {
     const movieId = req.params.id;
-    let movie = await Movie.findOne(movieId);
+    const userId = req.user.id;
+    let movie = await Movie.findOne(movieId, { relations: ["likes"] });
     if (!movie) {
       res.status(404).json({ message: "No movie with that id found!" });
       return;
     }
-    movie.likes = movie.likes + 1;
+    const user = await User.findOne(userId);
+    if (!user) {
+      res.status(401).json({ message: "User does not found!" });
+      return;
+    }
+    let alreadyLiked = false;
+    movie.likes.forEach((user) => {
+      if (user.id === userId) alreadyLiked = true;
+    });
+    if (alreadyLiked) {
+      movie.likes = movie.likes.filter((user) => {
+        return user.id !== userId;
+      });
+    } else {
+      movie.likes.push(user);
+    }
     await movie.save();
     res.json({
       message: "Movie liked!",

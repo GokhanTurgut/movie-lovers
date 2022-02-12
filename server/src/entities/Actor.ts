@@ -4,13 +4,12 @@ import {
   Column,
   ManyToOne,
   OneToMany,
-  ManyToMany,
   BaseEntity,
+  ManyToMany,
 } from "typeorm";
 
 import { User } from "./User";
 import { ActorComment } from "./ActorComment";
-// import { Movie } from "./Movie";
 
 @Entity()
 export class Actor extends BaseEntity {
@@ -25,9 +24,6 @@ export class Actor extends BaseEntity {
 
   @Column({ type: "text", nullable: true })
   imageURL: string;
-
-  @Column()
-  likes: number;
 
   @Column()
   public: boolean;
@@ -45,6 +41,6 @@ export class Actor extends BaseEntity {
   })
   comments: ActorComment[];
 
-  // @ManyToMany(() => Movie, (movie) => movie.actors)
-  // movies: Movie[];
+  @ManyToMany(() => User, (user) => user.likedActors)
+  likes: User[];
 }

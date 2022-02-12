@@ -4,6 +4,8 @@ import {
   Column,
   OneToMany,
   BaseEntity,
+  ManyToMany,
+  JoinTable,
 } from "typeorm";
 
 import { Movie } from "./Movie";
@@ -47,4 +49,16 @@ export class User extends BaseEntity {
     cascade: true,
   })
   actorComments: ActorComment[];
+
+  @ManyToMany(() => Movie, (movie) => movie.likes, {
+    cascade: true,
+  })
+  @JoinTable()
+  likedMovies: Movie[];
+
+  @ManyToMany(() => Actor, (actor) => actor.likes, {
+    cascade: true,
+  })
+  @JoinTable()
+  likedActors: Actor[];
 }

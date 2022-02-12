@@ -23,7 +23,7 @@ export const getActorById: RequestHandler = async (req, res) => {
     const actorId = req.params.id;
     const userId = req.user.id;
     const actor = await Actor.findOne(actorId, {
-      relations: ["user", "comments"],
+      relations: ["user", "comments", "likes"],
     });
     if (!actor) {
       res.status(404).json({ message: "No actor with that id found!" });
@@ -71,7 +71,6 @@ export const postActor: RequestHandler = async (req, res) => {
     actor.firstName = value.firstName;
     actor.lastName = value.lastName;
     actor.imageURL = value.imageURL;
-    actor.likes = 0;
     actor.public = value.public;
     actor.movies = value.movies;
     actor.user = user;
@@ -103,7 +102,6 @@ export const updateActorById: RequestHandler = async (req, res) => {
       res.status(400).json({ message: "Validation error!", error });
       return;
     }
-    console.log(value);
     let actor = await Actor.findOne(actorId, { relations: ["user"] });
     if (!actor) {
       res.status(404).json({ message: "No actor with that id found!" });
@@ -172,12 +170,28 @@ export const deleteActorById: RequestHandler = async (req, res) => {
 export const likeActorById: RequestHandler = async (req, res) => {
   try {
     const actorId = req.params.id;
-    let actor = await Actor.findOne(actorId);
+    const userId = req.user.id;
+    let actor = await Actor.findOne(actorId, { relations: ["likes"] });
     if (!actor) {
       res.status(404).json({ message: "No actor with that id found!" });
       return;
     }
-    actor.likes = actor.likes + 1;
+    const user = await User.findOne(userId);
+    if (!user) {
+      res.status(401).json({ message: "User does not found!" });
+      return;
+    }
+    let alreadyLiked = false;
+    actor.likes.forEach((user) => {
+      if (user.id === userId) alreadyLiked = true;
+    });
+    if (alreadyLiked) {
+      actor.likes = actor.likes.filter((user) => {
+        return user.id !== userId;
+      });
+    } else {
+      actor.likes.push(user);
+    }
     await actor.save();
     res.json({
       message: "Actor liked!",

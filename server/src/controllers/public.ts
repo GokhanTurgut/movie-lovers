@@ -21,7 +21,7 @@ export const getSharedMovieById: RequestHandler = async (req, res) => {
     const movie = await Movie.findOne(
       { id: movieId, public: true },
       {
-        relations: ["user", "comments"],
+        relations: ["user", "comments", "likes"],
       }
     );
     if (!movie) {
@@ -39,9 +39,9 @@ export const getSharedMovieById: RequestHandler = async (req, res) => {
         genre: movie.genre,
         director: movie.director,
         posterURL: movie.posterURL,
-        likes: movie.likes,
         public: movie.public,
         actors: movie.actors,
+        likes: movie.likes,
         comments: movie.comments,
       },
     });
@@ -68,7 +68,7 @@ export const getSharedActorById: RequestHandler = async (req, res) => {
     const actor = await Actor.findOne(
       { id: actorId, public: true },
       {
-        relations: ["user", "comments"],
+        relations: ["user", "comments", "likes"],
       }
     );
     if (!actor) {
@@ -83,9 +83,9 @@ export const getSharedActorById: RequestHandler = async (req, res) => {
         firstName: actor.firstName,
         lastName: actor.lastName,
         imageURL: actor.imageURL,
-        likes: actor.likes,
         public: actor.public,
         movies: actor.movies,
+        likes: actor.likes,
         comments: actor.comments,
       },
     });
