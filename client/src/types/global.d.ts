@@ -7,9 +7,9 @@ export interface MovieData {
   plot: string;
   actors: string;
   director: string;
-  likes: number;
   public: boolean;
   comments?: MovieComment[];
+  likes: UserData[];
 }
 
 export interface ActorData {
@@ -17,10 +17,10 @@ export interface ActorData {
   firstName: string;
   lastName: string;
   imageURL: string;
-  likes: number;
   public: boolean;
   movies: string;
   comments?: ActorComment[];
+  likes: UserData[];
 }
 
 export interface UserData {
@@ -32,6 +32,8 @@ export interface UserData {
   actors: Actor[];
   movieComments: MovieComment[];
   actorComments: ActorComment[];
+  likedMovies: MoviesData[];
+  likedActors: ActorData[];
 }
 
 export interface MovieComment {

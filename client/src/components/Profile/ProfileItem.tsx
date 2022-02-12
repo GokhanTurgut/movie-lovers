@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import AddComment from "../Comment/AddComment";
-import styles from "./ProfileCard.module.css";
+import styles from "./ProfileItem.module.css";
 
 interface Props {
   title: string;

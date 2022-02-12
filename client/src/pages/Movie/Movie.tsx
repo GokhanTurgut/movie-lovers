@@ -176,7 +176,7 @@ const Movie = () => {
           </div>
           <div className={styles.infoElement}>
             <h4 className={styles.categoryName}>Likes:</h4>
-            <h4>{movie?.likes}</h4>
+            <h4>{movie?.likes.length}</h4>
           </div>
           <Button
             variant="contained"

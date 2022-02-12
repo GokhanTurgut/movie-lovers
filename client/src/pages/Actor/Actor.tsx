@@ -163,7 +163,7 @@ const Actor = () => {
           </div>
           <div className={styles.infoElement}>
             <h4 className={styles.categoryName}>Likes:</h4>
-            <h4>{actor?.likes}</h4>
+            <h4>{actor?.likes.length}</h4>
           </div>
           <Button
             variant="contained"

@@ -5,7 +5,8 @@ import { Button, CircularProgress } from "@mui/material";
 import { RootState } from "../../redux/store";
 import ChangePassword from "../../components/Password/ChangePassword";
 import { UserData } from "../../types/global";
-import ProfileCard from "../../components/Card/ProfileCard";
+import ProfileCard from "../../components/Profile/ProfileItem";
+import LikedItem from "../../components/Profile/LikedItem";
 import styles from "./Profile.module.css";
 
 const Profile = () => {
@@ -61,6 +62,8 @@ const Profile = () => {
   let myActors;
   let myMovieComments;
   let myActorComments;
+  let myLikedMovies;
+  let myLikedActors;
   if (userData) {
     myMovies = userData.movies.map((movie) => {
       return (
@@ -114,6 +117,26 @@ const Profile = () => {
         />
       );
     });
+    myLikedMovies = userData.likedMovies.map((movie) => {
+      return (
+        <LikedItem
+          key={movie.id}
+          id={movie.id}
+          type="movie"
+          title={movie.title}
+        />
+      );
+    });
+    myLikedActors = userData.likedActors.map((actor) => {
+      return (
+        <LikedItem
+          key={actor.id}
+          id={actor.id}
+          type="actor"
+          title={`${actor.firstName} ${actor.lastName}`}
+        />
+      );
+    });
   }
 
   return (
@@ -158,6 +181,14 @@ const Profile = () => {
         <h3>My Comments</h3>
         {myMovieComments}
         {myActorComments}
+      </div>
+      <div className={styles.userContent + " container"}>
+        <h3>Liked Movies</h3>
+        {myLikedMovies}
+      </div>
+      <div className={styles.userContent + " container"}>
+        <h3>Liked Actors</h3>
+        {myLikedActors}
       </div>
     </div>
   );
