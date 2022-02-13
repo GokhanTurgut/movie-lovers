@@ -46,6 +46,8 @@ export const changePassword: RequestHandler = async (req, res) => {
       return;
     }
     const user = await User.findOne(userId);
+    // If user has already created a password then check if the
+    // old password and provided one matches.
     if (user.password !== null) {
       const doMatch = await bcrypt.compare(value.oldPassword, user.password);
       if (!doMatch) {
@@ -53,6 +55,8 @@ export const changePassword: RequestHandler = async (req, res) => {
         return;
       }
     }
+    // If it's the first password of user because of sign in with Google or
+    // Facebook then we can proceed to changing the password.
     const hashedPass = await bcrypt.hash(value.newPassword, 10);
     user.password = hashedPass;
     await user.save();

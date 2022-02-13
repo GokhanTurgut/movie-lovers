@@ -111,6 +111,7 @@ export const updateActorById: RequestHandler = async (req, res) => {
       res.status(401).json({ message: "Users does not match!" });
       return;
     }
+    // Logic for only changing the provided data to enable partial changes
     if (value.firstName) {
       actor.firstName = value.firstName;
     }
@@ -181,6 +182,8 @@ export const likeActorById: RequestHandler = async (req, res) => {
       res.status(401).json({ message: "User does not found!" });
       return;
     }
+    // Logic for checking if user already liked this actor
+    // if yes then dislike user instead
     let alreadyLiked = false;
     actor.likes.forEach((user) => {
       if (user.id === userId) alreadyLiked = true;

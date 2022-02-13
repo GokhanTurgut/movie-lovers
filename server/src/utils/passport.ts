@@ -6,6 +6,11 @@ import facebookPassport from "passport-facebook";
 import { User } from "../entities/User";
 import env from "./env";
 
+/*
+  Passport configuration file, to configure JWT, Google and
+  Facebook strategies also serialize and deserialize users.
+*/
+
 const JwtStrategy = passportJwt.Strategy;
 const ExtractJwt = passportJwt.ExtractJwt;
 const GoogleStrategy = googlePassport.Strategy;

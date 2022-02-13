@@ -2,6 +2,11 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+/*
+  Utility file for checking and assigning environment variables
+  in one place and throwing errors as necessary.
+*/
+
 const PORT = process.env.PORT || 5000;
 
 if (!process.env.PRIVATE_KEY) {
@@ -46,7 +51,6 @@ if (!process.env.SERVER_URL) {
 
 const SERVER_URL = process.env.SERVER_URL;
 
-
 export default {
   PORT,
   PRIVATE_KEY,
@@ -55,5 +59,5 @@ export default {
   FACEBOOK_APP_ID,
   FACEBOOK_APP_SECRET,
   CLIENT_URL,
-  SERVER_URL
+  SERVER_URL,
 };

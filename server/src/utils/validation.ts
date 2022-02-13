@@ -1,5 +1,11 @@
 import Joi from "joi";
 
+/*
+  Validation schemas to use in controllers
+  to validate incoming request bodies and return 
+  appropriate validation error messages
+*/
+
 export const signUpSchema = Joi.object({
   email: Joi.string().email().max(255).required(),
 

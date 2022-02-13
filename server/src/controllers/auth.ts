@@ -18,6 +18,7 @@ export const signUp: RequestHandler = async (req, res) => {
     if (sameEmail) {
       return res.status(400).json({ message: "Email already exists!" });
     }
+    // Hash the password for security before saving it to the database
     const hashedPass = await bcrypt.hash(password, 10);
     let user = new User();
     user.email = email;
@@ -51,19 +52,22 @@ export const login: RequestHandler = async (req, res) => {
       res.status(401).json({ message: "Email not found!" });
       return;
     }
+    // If user sign in with Google or Facebook they will not have
+    // a password so they can't login with email and password until they
+    // change their password in profile page
     if (!user.password) {
-      res
-        .status(401)
-        .json({
-          message: "No password for this email yet!",
-        });
+      res.status(401).json({
+        message: "No password for this email yet!",
+      });
       return;
     }
+    // Checking if the hashed password matches the provided one
     const doMatch = await bcrypt.compare(password, user.password);
     if (!doMatch) {
       res.status(401).json({ message: "Wrong password!" });
       return;
     }
+    // Creating a JWT token with user id as its payload and 1 day expiration time
     const token = jwt.sign({ id: user.id }, env.PRIVATE_KEY, {
       expiresIn: "1d",
     });
@@ -74,10 +78,14 @@ export const login: RequestHandler = async (req, res) => {
 };
 
 export const oauthLogin: RequestHandler = async (req, res) => {
+  // User provided by passport in req object
   const userId = req.user.id;
+  // Creating a JWT token with user id as its payload and 1 day expiration time
   const token = jwt.sign({ id: userId }, env.PRIVATE_KEY, {
     expiresIn: "1d",
   });
+  // Redirecting user to front end with user id and token as query parameters
+  // to be able to access these information in front end through parsing the url.
   res.redirect(
     `${env.CLIENT_URL}/signin/success?userId=${userId}&token=${token}`
   );

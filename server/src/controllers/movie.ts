@@ -120,6 +120,7 @@ export const updateMovieById: RequestHandler = async (req, res) => {
       res.status(401).json({ message: "Users does not match!" });
       return;
     }
+    // Logic for only changing the provided data to enable partial changes
     if (value.title) {
       movie.title = value.title;
     }
@@ -202,6 +203,8 @@ export const likeMovieById: RequestHandler = async (req, res) => {
       res.status(401).json({ message: "User does not found!" });
       return;
     }
+    // Logic for checking if user already liked this movie
+    // if yes then dislike movie instead
     let alreadyLiked = false;
     movie.likes.forEach((user) => {
       if (user.id === userId) alreadyLiked = true;
