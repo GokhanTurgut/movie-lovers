@@ -183,6 +183,14 @@ const Profile = () => {
         </div>
       </div>
       <div className={styles.userContent + " container"}>
+        <h3>Liked Movies</h3>
+        {myLikedMovies}
+      </div>
+      <div className={styles.userContent + " container"}>
+        <h3>Liked Actors</h3>
+        {myLikedActors}
+      </div>
+      <div className={styles.userContent + " container"}>
         <h3>My Movies</h3>
         {myMovies}
       </div>
@@ -194,14 +202,6 @@ const Profile = () => {
         <h3>My Comments</h3>
         {myMovieComments}
         {myActorComments}
-      </div>
-      <div className={styles.userContent + " container"}>
-        <h3>Liked Movies</h3>
-        {myLikedMovies}
-      </div>
-      <div className={styles.userContent + " container"}>
-        <h3>Liked Actors</h3>
-        {myLikedActors}
       </div>
     </div>
   );

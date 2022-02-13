@@ -18,6 +18,12 @@ import Actor from "./pages/Actor/Actor";
 import NotFound from "./pages/NotFound";
 import { RequireAuth, RequireNoAuth } from "./utils/authChecker";
 
+/*
+  All routing is done in here with the help 
+  of react-router, selected path will be rendered
+  inside App component where Outlet is.
+*/
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>

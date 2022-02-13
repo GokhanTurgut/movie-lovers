@@ -40,7 +40,6 @@ const AddActor = (props: Props) => {
             `https://gusto-movie.herokuapp.com/actor/${id}`,
             config
           );
-          console.log(result);
           setInputs({
             firstName: result.data.actor.firstName,
             lastName: result.data.actor.lastName,

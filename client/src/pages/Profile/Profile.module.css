@@ -1,9 +1,13 @@
 .pageContainer {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 1rem;
-  flex-wrap: wrap;
+}
+
+.pageContainer > div {
+  min-width: 15rem;
 }
 
 .profile {
