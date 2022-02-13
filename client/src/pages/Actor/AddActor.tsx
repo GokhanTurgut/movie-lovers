@@ -40,6 +40,7 @@ const AddActor = (props: Props) => {
             `http://localhost:5000/actor/${id}`,
             config
           );
+          console.log(result);
           setInputs({
             firstName: result.data.actor.firstName,
             lastName: result.data.actor.lastName,
@@ -48,7 +49,12 @@ const AddActor = (props: Props) => {
             public: result.data.actor.public,
           });
         } catch (err) {
-          console.error(err);
+          setMessage(
+            <p className="error-message">
+              <i className="fas fa-exclamation-circle"></i> Getting actor data
+              failed!
+            </p>
+          );
         }
       }
     }
@@ -100,13 +106,17 @@ const AddActor = (props: Props) => {
       } catch (err) {
         setMessage(
           <p className="error-message">
-            <i className="fas fa-exclamation-circle"></i> Actor creation failed!
+            <i className="fas fa-exclamation-circle"></i> Actor update failed!
           </p>
         );
       }
     } else {
       try {
-        const result = await axios.post("http://localhost:5000/actor", inputs, config);
+        const result = await axios.post(
+          "http://localhost:5000/actor",
+          inputs,
+          config
+        );
         navigate(`/actor/${result.data.actor.id}`);
       } catch (err) {
         setMessage(
@@ -231,12 +241,7 @@ const AddActor = (props: Props) => {
         />
         <FormControlLabel
           label="Public"
-          control={
-            <Switch
-              onChange={publicHandler}
-              checked={inputs.public}
-            />
-          }
+          control={<Switch onChange={publicHandler} checked={inputs.public} />}
         />
         <Button variant="contained" type="submit">
           Submit

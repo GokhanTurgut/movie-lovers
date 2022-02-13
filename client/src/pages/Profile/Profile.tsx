@@ -1,18 +1,22 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Button, CircularProgress } from "@mui/material";
 import { RootState } from "../../redux/store";
+import { clearUser } from "../../redux/user";
 import ChangePassword from "../../components/Password/ChangePassword";
 import { UserData } from "../../types/global";
 import ProfileCard from "../../components/Profile/ProfileItem";
 import LikedItem from "../../components/Profile/LikedItem";
 import styles from "./Profile.module.css";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const [showPasswordForm, setShowPasswordForm] = useState(false);
   const [userData, setUserData] = useState<UserData>();
   const [refresh, setRefresh] = useState(false);
+  let navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const user = useSelector((state: RootState) => state.user);
 
@@ -27,11 +31,17 @@ const Profile = () => {
           setUserData(result.data.user);
         }
       } catch (err: any) {
+        if (err.response) {
+          if (err.response.status === 401) {
+            dispatch(clearUser());
+            navigate("/");
+          }
+        }
         console.error(err);
       }
     }
     getUserData();
-  }, [user.token, refresh]);
+  }, [user.token, refresh, dispatch, navigate]);
 
   function showHandler() {
     setShowPasswordForm((state) => {

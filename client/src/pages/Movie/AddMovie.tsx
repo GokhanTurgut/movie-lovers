@@ -59,7 +59,12 @@ const AddMovie = (props: Props) => {
           });
           setRelease(new Date(result.data.movie.release));
         } catch (err) {
-          console.error(err);
+          setMessage(
+            <p className="error-message">
+              <i className="fas fa-exclamation-circle"></i> Getting movie data
+              failed!
+            </p>
+          );
         }
       }
     }
@@ -127,7 +132,7 @@ const AddMovie = (props: Props) => {
       } catch (err) {
         setMessage(
           <p className="error-message">
-            <i className="fas fa-exclamation-circle"></i> Actor creation failed!
+            <i className="fas fa-exclamation-circle"></i> Movie update failed!
           </p>
         );
       }
@@ -142,7 +147,7 @@ const AddMovie = (props: Props) => {
       } catch (err) {
         setMessage(
           <p className="error-message">
-            <i className="fas fa-exclamation-circle"></i> Actor creation failed!
+            <i className="fas fa-exclamation-circle"></i> Movie creation failed!
           </p>
         );
       }
