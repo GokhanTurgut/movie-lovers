@@ -29,7 +29,7 @@ const AddComment = (props: Props) => {
       if (props.editing && props.commentId) {
         try {
           const result = await axios.get(
-            `http://localhost:5000/${props.type}/comment/${props.commentId}`,
+            `https://gusto-movie.herokuapp.com/${props.type}/comment/${props.commentId}`,
             config
           );
           setContent(result.data.comment.content);
@@ -64,7 +64,7 @@ const AddComment = (props: Props) => {
     if (props.editing && props.commentId) {
       try {
         const result = await axios.put(
-          `http://localhost:5000/${props.type}/comment/${props.commentId}`,
+          `https://gusto-movie.herokuapp.com/${props.type}/comment/${props.commentId}`,
           data,
           config
         );
@@ -76,7 +76,7 @@ const AddComment = (props: Props) => {
     } else {
       try {
         await axios.post(
-          `http://localhost:5000/${props.type}/comment`,
+          `https://gusto-movie.herokuapp.com/${props.type}/comment`,
           data,
           config
         );

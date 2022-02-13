@@ -45,7 +45,7 @@ const AddMovie = (props: Props) => {
       if (props.editing && id) {
         try {
           const result = await axios.get(
-            `http://localhost:5000/movie/${id}`,
+            `https://gusto-movie.herokuapp.com/movie/${id}`,
             config
           );
           setInputs({
@@ -124,7 +124,7 @@ const AddMovie = (props: Props) => {
     if (props.editing && id) {
       try {
         const result = await axios.put(
-          `http://localhost:5000/movie/${id}`,
+          `https://gusto-movie.herokuapp.com/movie/${id}`,
           { ...inputs, release },
           config
         );
@@ -139,7 +139,7 @@ const AddMovie = (props: Props) => {
     } else {
       try {
         const result = await axios.post(
-          "http://localhost:5000/movie",
+          "https://gusto-movie.herokuapp.com/movie",
           { ...inputs, release },
           config
         );

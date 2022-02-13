@@ -84,12 +84,15 @@ const SignUp = () => {
       return;
     }
     try {
-      const result = await axios.post("http://localhost:5000/auth/signup", {
-        email,
-        firstName,
-        lastName,
-        password,
-      });
+      const result = await axios.post(
+        "https://gusto-movie.herokuapp.com/auth/signup",
+        {
+          email,
+          firstName,
+          lastName,
+          password,
+        }
+      );
       if (result.status === 201) {
         navigate("/signin");
       }

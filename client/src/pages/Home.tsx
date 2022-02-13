@@ -14,7 +14,9 @@ const Home = () => {
   useEffect(() => {
     async function getMovies() {
       try {
-        const result = await axios.get("http://localhost:5000/public/movie");
+        const result = await axios.get(
+          "https://gusto-movie.herokuapp.com/public/movie"
+        );
         setMovies(result.data.movies);
         setLoading(false);
       } catch (err) {
@@ -23,7 +25,9 @@ const Home = () => {
     }
     async function getActors() {
       try {
-        const result = await axios.get("http://localhost:5000/public/actor");
+        const result = await axios.get(
+          "https://gusto-movie.herokuapp.com/public/actor"
+        );
         setActors(result.data.actors);
         setLoading(false);
       } catch (err) {

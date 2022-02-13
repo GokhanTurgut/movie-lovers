@@ -54,7 +54,7 @@ const ChangePassword = (props: Props) => {
     }
     try {
       const result = await axios.put(
-        "http://localhost:5000/user/password",
+        "https://gusto-movie.herokuapp.com/user/password",
         {
           oldPassword: password,
           newPassword,

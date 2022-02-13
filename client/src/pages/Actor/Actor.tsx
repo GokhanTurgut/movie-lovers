@@ -34,7 +34,7 @@ const Actor = () => {
     async function getActor() {
       try {
         const result = await axios.get(
-          `http://localhost:5000/public/actor/${id}`
+          `https://gusto-movie.herokuapp.com/public/actor/${id}`
         );
         setActor(result.data.actor);
         setAuthor(result.data.user);
@@ -42,7 +42,7 @@ const Actor = () => {
       } catch (err) {
         if (config) {
           const result = await axios.get(
-            `http://localhost:5000/actor/${id}`,
+            `https://gusto-movie.herokuapp.com/actor/${id}`,
             config
           );
           if (result.status === 200) {
@@ -96,7 +96,7 @@ const Actor = () => {
     try {
       if (config) {
         const result = await axios.post(
-          `http://localhost:5000/actor/like/${actor?.id}`,
+          `https://gusto-movie.herokuapp.com/actor/like/${actor?.id}`,
           {},
           config
         );

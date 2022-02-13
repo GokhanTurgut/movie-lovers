@@ -37,7 +37,7 @@ const AddActor = (props: Props) => {
       if (props.editing && id) {
         try {
           const result = await axios.get(
-            `http://localhost:5000/actor/${id}`,
+            `https://gusto-movie.herokuapp.com/actor/${id}`,
             config
           );
           console.log(result);
@@ -98,7 +98,7 @@ const AddActor = (props: Props) => {
     if (props.editing && id) {
       try {
         const result = await axios.put(
-          `http://localhost:5000/actor/${id}`,
+          `https://gusto-movie.herokuapp.com/actor/${id}`,
           inputs,
           config
         );
@@ -113,7 +113,7 @@ const AddActor = (props: Props) => {
     } else {
       try {
         const result = await axios.post(
-          "http://localhost:5000/actor",
+          "https://gusto-movie.herokuapp.com/actor",
           inputs,
           config
         );

@@ -31,7 +31,7 @@ const ProfileCard = (props: Props) => {
     if (props.type === "movieComment") {
       try {
         const result = await axios.get(
-          `http://localhost:5000/movie/comment/${props.id}`,
+          `https://gusto-movie.herokuapp.com/movie/comment/${props.id}`,
           config
         );
         navigate(`/movie/${result.data.comment.movieId}`);
@@ -43,7 +43,7 @@ const ProfileCard = (props: Props) => {
     if (props.type === "actorComment") {
       try {
         const result = await axios.get(
-          `http://localhost:5000/actor/comment/${props.id}`,
+          `https://gusto-movie.herokuapp.com/actor/comment/${props.id}`,
           config
         );
         navigate(`/actor/${result.data.comment.actorId}`);
@@ -67,7 +67,7 @@ const ProfileCard = (props: Props) => {
       } else {
         try {
           const result = await axios.get(
-            `http://localhost:5000/movie/comment/${props.id}`,
+            `https://gusto-movie.herokuapp.com/movie/comment/${props.id}`,
             config
           );
           setEditComment(
@@ -92,7 +92,7 @@ const ProfileCard = (props: Props) => {
       } else {
         try {
           const result = await axios.get(
-            `http://localhost:5000/actor/comment/${props.id}`,
+            `https://gusto-movie.herokuapp.com/actor/comment/${props.id}`,
             config
           );
           setEditComment(
@@ -115,7 +115,10 @@ const ProfileCard = (props: Props) => {
   async function deleteHandler() {
     if (props.type === "movie" || props.type === "actor") {
       try {
-        axios.delete(`http://localhost:5000/${props.type}/${props.id}`, config);
+        axios.delete(
+          `https://gusto-movie.herokuapp.com/${props.type}/${props.id}`,
+          config
+        );
         props.refreshPage();
         return;
       } catch (err) {
@@ -124,7 +127,10 @@ const ProfileCard = (props: Props) => {
     }
     if (props.type === "movieComment") {
       try {
-        axios.delete(`http://localhost:5000/movie/comment/${props.id}`, config);
+        axios.delete(
+          `https://gusto-movie.herokuapp.com/movie/comment/${props.id}`,
+          config
+        );
         props.refreshPage();
         return;
       } catch (err) {
@@ -133,7 +139,10 @@ const ProfileCard = (props: Props) => {
     }
     if (props.type === "actorComment") {
       try {
-        axios.delete(`http://localhost:5000/actor/comment/${props.id}`, config);
+        axios.delete(
+          `https://gusto-movie.herokuapp.com/actor/comment/${props.id}`,
+          config
+        );
         props.refreshPage();
         return;
       } catch (err) {

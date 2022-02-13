@@ -26,7 +26,10 @@ const Profile = () => {
     };
     async function getUserData() {
       try {
-        const result = await axios.get("http://localhost:5000/user", config);
+        const result = await axios.get(
+          "https://gusto-movie.herokuapp.com/user",
+          config
+        );
         if (result.status === 200) {
           setUserData(result.data.user);
         }
@@ -174,7 +177,7 @@ const Profile = () => {
             color="error"
             onClick={showHandler}
           >
-            {showPasswordForm ? "Cancel" : "Change Password"}
+            {showPasswordForm ? "Close" : "Change Password"}
           </Button>
           {passwordForm}
         </div>
