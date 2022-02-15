@@ -61,12 +61,6 @@ const Home = () => {
     );
   });
 
-  const muchMovies = [];
-
-  for (let i = 0; i < 20; i++) {
-    muchMovies.push(movieCards[0]);
-  }
-
   if (error) {
     return <div className="container">{error}</div>;
   }
