@@ -5,12 +5,12 @@ module.exports = {
   synchronize: true,
   logging: ["error", "warn", "info"],
   // Change below to run ts or dev scripts
-  entities: ["src/entities/**/*.ts"],
-  migrations: ["src/migration/**/*.ts"],
-  subscribers: ["src/subscriber/**/*.ts"],
+  entities: ["build/entities/**/*.js"],
+  migrations: ["build/migration/**/*.js"],
+  subscribers: ["build/subscriber/**/*.js"],
   cli: {
-    entitiesDir: "src/entities",
-    migrationsDir: "src/migration",
-    subscribersDir: "src/subscriber",
+    entitiesDir: "build/entities",
+    migrationsDir: "build/migration",
+    subscribersDir: "build/subscriber",
   },
 };

@@ -83,7 +83,7 @@ PRIVATE_KEY=< Private key for JWT token >
 GOOGLE_CLIENT_ID=< Google Oauth id >
 GOOGLE_CLIENT_SECRET=< Google Oauth secret >
 FACEBOOK_APP_ID=< Facebook Oauth id >
-FACEBOOK_APP_SECRET=< Google Oauth secret >
+FACEBOOK_APP_SECRET=< Facebook Oauth secret >
 CLIENT_URL=< Client url address >
 SERVER_URL=< Server url address >
 ```
