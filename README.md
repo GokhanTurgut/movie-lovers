@@ -1,6 +1,6 @@
 # Movie Lovers
 
-![Project Picture](https://i.imgur.com/ch8arCT.png)
+![Project Picture](https://i.ibb.co/2n9Q59k/movie-lovers.png)
 
 Final project for Gusto &amp; RemoteTeam Node.js Bootcamp
 
@@ -65,7 +65,7 @@ npm start
 For backend we have used Express to create a REST API that our frontend can speak to through our endpoints. Main routes are authentication routes, public routes for shared movie and actor data, user route, movie route and actor route. Passport.js library has been used to configure Google and Facebook authentication and only JWT has been used to authenticate users without sessions to have stateless server which can easily be scaled.
 Database tables and relations can be seen below in ER diagram:
 
-![ER Diagram](https://i.imgur.com/dydpUNI.png)
+![ER Diagram](https://i.ibb.co/XSbYCQ4/database-er-diagram.png)
 
 TypeORM has been used as our ORM choice to create an abstraction layer to raw SQL queries. Joi library has been used to validate incoming client side data and respond with appropriate validation error messages.For deployment we have used Heroku and ClearDB as our MySQL cloud database.Below is the deployed REST API link for API testing.
 
